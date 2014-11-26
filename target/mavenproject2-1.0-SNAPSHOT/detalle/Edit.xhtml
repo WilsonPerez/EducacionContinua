@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="DetalleEditDlg" widgetVar="DetalleEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditDetalleTitle}">
+            <h:form id="DetalleEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{detalleController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditDetalleLabel_idDetalle}" for="idDetalle" />
+                        <p:inputText id="idDetalle" value="#{detalleController.selected.idDetalle}" title="#{bundle.EditDetalleTitle_idDetalle}" required="true" requiredMessage="#{bundle.EditDetalleRequiredMessage_idDetalle}"/>
+                        <p:outputLabel value="#{bundle.EditDetalleLabel_objetivos}" for="objetivos" />
+                        <p:inputText id="objetivos" value="#{detalleController.selected.objetivos}" title="#{bundle.EditDetalleTitle_objetivos}" required="true" requiredMessage="#{bundle.EditDetalleRequiredMessage_objetivos}"/>
+                        <p:outputLabel value="#{bundle.EditDetalleLabel_fechaInscripcion}" for="fechaInscripcion" />
+                        <p:calendar id="fechaInscripcion" pattern="MM/dd/yyyy" value="#{detalleController.selected.fechaInscripcion}" title="#{bundle.EditDetalleTitle_fechaInscripcion}" required="true" requiredMessage="#{bundle.EditDetalleRequiredMessage_fechaInscripcion}" showOn="button"/>
+                        <p:outputLabel value="#{bundle.EditDetalleLabel_numHoras}" for="numHoras" />
+                        <p:inputText id="numHoras" value="#{detalleController.selected.numHoras}" title="#{bundle.EditDetalleTitle_numHoras}" />
+                        <p:outputLabel value="#{bundle.EditDetalleLabel_lugarInscripcion}" for="lugarInscripcion" />
+                        <p:inputText id="lugarInscripcion" value="#{detalleController.selected.lugarInscripcion}" title="#{bundle.EditDetalleTitle_lugarInscripcion}" />
+                        <p:outputLabel value="#{bundle.EditDetalleLabel_direccionCurso}" for="direccionCurso" />
+                        <p:inputText id="direccionCurso" value="#{detalleController.selected.direccionCurso}" title="#{bundle.EditDetalleTitle_direccionCurso}" />
+                        <p:outputLabel value="#{bundle.EditDetalleLabel_numTelefono}" for="numTelefono" />
+                        <p:inputText id="numTelefono" value="#{detalleController.selected.numTelefono}" title="#{bundle.EditDetalleTitle_numTelefono}" />
+                        <p:outputLabel value="#{bundle.EditDetalleLabel_precio}" for="precio" />
+                        <p:inputText id="precio" value="#{detalleController.selected.precio}" title="#{bundle.EditDetalleTitle_precio}" />
+                        <p:outputLabel value="#{bundle.EditDetalleLabel_numCupos}" for="numCupos" />
+                        <p:inputText id="numCupos" value="#{detalleController.selected.numCupos}" title="#{bundle.EditDetalleTitle_numCupos}" />
+                        <p:outputLabel value="#{bundle.EditDetalleLabel_idCurso}" for="idCurso" />
+                        <p:selectOneMenu id="idCurso" value="#{detalleController.selected.idCurso}" >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{cursoController.itemsAvailableSelectOne}"
+                                           var="idCursoItem"
+                                           itemValue="#{idCursoItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{detalleController.update}" value="#{bundle.Save}" update="display,:DetalleListForm:datalist,:growl" oncomplete="handleSubmit(args, 'DetalleEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="DetalleEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

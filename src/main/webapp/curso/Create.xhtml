@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="CursoCreateDlg" widgetVar="CursoCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateCursoTitle}">
+            <h:form id="CursoCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{cursoController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateCursoLabel_idCurso}" for="idCurso" />
+                        <p:inputText id="idCurso" value="#{cursoController.selected.idCurso}" title="#{bundle.CreateCursoTitle_idCurso}" required="true" requiredMessage="#{bundle.CreateCursoRequiredMessage_idCurso}"/>
+                        <p:outputLabel value="#{bundle.CreateCursoLabel_nombre}" for="nombre" />
+                        <p:inputText id="nombre" value="#{cursoController.selected.nombre}" title="#{bundle.CreateCursoTitle_nombre}" required="true" requiredMessage="#{bundle.CreateCursoRequiredMessage_nombre}"/>
+                        <p:outputLabel value="#{bundle.CreateCursoLabel_descripccion}" for="descripccion" />
+                        <p:inputText id="descripccion" value="#{cursoController.selected.descripccion}" title="#{bundle.CreateCursoTitle_descripccion}" />
+                        <p:outputLabel value="#{bundle.CreateCursoLabel_idTipo}" for="idTipo" />
+                        <p:selectOneMenu id="idTipo" value="#{cursoController.selected.idTipo}" >
+                            <f:selectItems value="#{tipoController.itemsAvailableSelectOne}"
+                                           var="idTipoItem"
+                                           itemValue="#{idTipoItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                                        <p:tabView>
+                        <p:tab>
+                            <h:form>
+                                <p:growl id="msg" showDetail="true" escape="false" />
+
+                                <h3>Dirigido A:</h3>
+                                <p:pickList id="pojoPickList" value="#{cursoController.dirigidosa}" var="theme" effect="bounce"
+                                            itemValue="#{theme}" converter="dirigidoaConverter"
+                                                showSourceControls="true" showTargetControls="true" showCheckbox="true"
+                                showSourceFilter="true" showTargetFilter="true" filterMatchMode="contains" itemLabel="#{theme.nombre}">
+
+                                    <f:facet name="sourceCaption">Available</f:facet>
+                                    <f:facet name="targetCaption">Starting</f:facet>
+
+                                    <p:ajax event="transfer" listener="#{cursoController.onTransfer}" update="msg" />
+
+                                    <p:column style="width:25%">
+                                        <h:outputText styleClass="ui-theme ui-theme-#{theme.nombre}" />
+                                    </p:column>
+
+                                     <p:column style="width:75%;">
+                                        #{theme.nombre}
+                                    </p:column>
+                                </p:pickList>
+
+                                <p:commandButton id="pojoSubmit" value="Submit" update="displayPlayers" oncomplete="playerDialog.show()" style="margin-top:5px"/>
+
+                                 <p:dialog modal="true" showEffect="fade" hideEffect="fade" widgetVar="playerDialog">
+                                    <h:panelGrid id="displayPlayers" columns="2">
+                                        <h:outputText value="Source: " style="font-weight:bold"/>
+                                        <ui:repeat value="#{cursoController.dirigidosa.source}" var="player">
+                                            <h:outputText value="#{theme.nombre}" style="margin-right:5px" />
+                                        </ui:repeat>
+
+                                        <h:outputText value="Target: " style="font-weight:bold"/>
+                                        <ui:repeat value="#{cursoController.dirigidosa.target}" var="player">
+                                            <h:outputText value="#{theme.nombre}" style="margin-right:5px" />
+                                        </ui:repeat>
+                                    </h:panelGrid>
+                                </p:dialog>
+                            </h:form>
+                        </p:tab>
+                        <p:tab>
+                            <h:form>
+                                <p:growl id="msg" showDetail="true" escape="false" />
+
+                                <h3>Instructor:</h3>
+                                <p:pickList id="pojoPickList" value="#{cursoController.instructores}" var="theme" effect="bounce"
+                                            itemValue="#{theme}" converter="instructorConverter"
+                                                showSourceControls="true" showTargetControls="true" showCheckbox="true"
+                                showSourceFilter="true" showTargetFilter="true" filterMatchMode="contains" itemLabel="#{theme.nombre}">
+
+                                    <f:facet name="sourceCaption">Available</f:facet>
+                                    <f:facet name="targetCaption">Starting</f:facet>
+
+                                    <p:ajax event="transfer" listener="#{cursoController.onTransfer}" update="msg" />
+
+                                    <p:column style="width:25%">
+                                        <h:outputText styleClass="ui-theme ui-theme-#{theme.nombre}" />
+                                    </p:column>
+
+                                     <p:column style="width:75%;">
+                                        #{theme.nombre}
+                                    </p:column>
+                                </p:pickList>
+
+                                <p:commandButton id="pojoSubmit" value="Submit" update="displayPlayers" oncomplete="playerDialog.show()" style="margin-top:5px"/>
+
+                                 <p:dialog modal="true" showEffect="fade" hideEffect="fade" widgetVar="playerDialog">
+                                    <h:panelGrid id="displayPlayers" columns="2">
+                                        <h:outputText value="Source: " style="font-weight:bold"/>
+                                        <ui:repeat value="#{cursoController.instructores.source}" var="player">
+                                            <h:outputText value="#{theme.nombre}" style="margin-right:5px" />
+                                        </ui:repeat>
+
+                                        <h:outputText value="Target: " style="font-weight:bold"/>
+                                        <ui:repeat value="#{cursoController.instructores.target}" var="player">
+                                            <h:outputText value="#{theme.nombre}" style="margin-right:5px" />
+                                        </ui:repeat>
+                                    </h:panelGrid>
+                                </p:dialog>
+                            </h:form>
+                        </p:tab>
+                       
+                    </p:tabView>
+                    <p:commandButton actionListener="#{cursoController.create}" value="#{bundle.Save}" update="display,:CursoListForm:datalist,:growl" oncomplete="handleSubmit(args,'CursoCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="CursoCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

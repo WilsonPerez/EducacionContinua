@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="CursoDirigidoaEditDlg" widgetVar="CursoDirigidoaEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditCursoDirigidoaTitle}">
+            <h:form id="CursoDirigidoaEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{cursoDirigidoaController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditCursoDirigidoaLabel_idCursoDirigidoa}" for="idCursoDirigidoa" />
+                        <p:inputText id="idCursoDirigidoa" value="#{cursoDirigidoaController.selected.idCursoDirigidoa}" title="#{bundle.EditCursoDirigidoaTitle_idCursoDirigidoa}" required="true" requiredMessage="#{bundle.EditCursoDirigidoaRequiredMessage_idCursoDirigidoa}"/>
+                        <p:outputLabel value="#{bundle.EditCursoDirigidoaLabel_idDirigidoa}" for="idDirigidoa" />
+                        <p:selectOneMenu id="idDirigidoa" value="#{cursoDirigidoaController.selected.idDirigidoa}" required="true" requiredMessage="#{bundle.EditCursoDirigidoaRequiredMessage_idDirigidoa}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{dirigidoAController.itemsAvailableSelectOne}"
+                                           var="idDirigidoaItem"
+                                           itemValue="#{idDirigidoaItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditCursoDirigidoaLabel_idCurso}" for="idCurso" />
+                        <p:selectOneMenu id="idCurso" value="#{cursoDirigidoaController.selected.idCurso}" required="true" requiredMessage="#{bundle.EditCursoDirigidoaRequiredMessage_idCurso}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{cursoController.itemsAvailableSelectOne}"
+                                           var="idCursoItem"
+                                           itemValue="#{idCursoItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{cursoDirigidoaController.update}" value="#{bundle.Save}" update="display,:CursoDirigidoaListForm:datalist,:growl" oncomplete="handleSubmit(args, 'CursoDirigidoaEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="CursoDirigidoaEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

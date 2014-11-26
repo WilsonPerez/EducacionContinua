@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="DetalleViewDlg" widgetVar="DetalleViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewDetalleTitle}">
+            <h:form id="DetalleViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{detalleController.selected != null}">
+                        <h:outputText value="#{bundle.ViewDetalleLabel_idDetalle}"/>
+                        <h:outputText value="#{detalleController.selected.idDetalle}" title="#{bundle.ViewDetalleTitle_idDetalle}"/>
+                        <h:outputText value="#{bundle.ViewDetalleLabel_objetivos}"/>
+                        <h:outputText value="#{detalleController.selected.objetivos}" title="#{bundle.ViewDetalleTitle_objetivos}"/>
+                        <h:outputText value="#{bundle.ViewDetalleLabel_fechaInscripcion}"/>
+                        <h:outputText value="#{detalleController.selected.fechaInscripcion}" title="#{bundle.ViewDetalleTitle_fechaInscripcion}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewDetalleLabel_numHoras}"/>
+                        <h:outputText value="#{detalleController.selected.numHoras}" title="#{bundle.ViewDetalleTitle_numHoras}"/>
+                        <h:outputText value="#{bundle.ViewDetalleLabel_lugarInscripcion}"/>
+                        <h:outputText value="#{detalleController.selected.lugarInscripcion}" title="#{bundle.ViewDetalleTitle_lugarInscripcion}"/>
+                        <h:outputText value="#{bundle.ViewDetalleLabel_direccionCurso}"/>
+                        <h:outputText value="#{detalleController.selected.direccionCurso}" title="#{bundle.ViewDetalleTitle_direccionCurso}"/>
+                        <h:outputText value="#{bundle.ViewDetalleLabel_numTelefono}"/>
+                        <h:outputText value="#{detalleController.selected.numTelefono}" title="#{bundle.ViewDetalleTitle_numTelefono}"/>
+                        <h:outputText value="#{bundle.ViewDetalleLabel_precio}"/>
+                        <h:outputText value="#{detalleController.selected.precio}" title="#{bundle.ViewDetalleTitle_precio}"/>
+                        <h:outputText value="#{bundle.ViewDetalleLabel_numCupos}"/>
+                        <h:outputText value="#{detalleController.selected.numCupos}" title="#{bundle.ViewDetalleTitle_numCupos}"/>
+                        <h:outputText value="#{bundle.ViewDetalleLabel_idCurso}"/>
+                        <h:outputText value="#{detalleController.selected.idCurso}" title="#{bundle.ViewDetalleTitle_idCurso}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="DetalleViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

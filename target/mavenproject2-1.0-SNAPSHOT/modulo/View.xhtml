@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ModuloViewDlg" widgetVar="ModuloViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewModuloTitle}">
+            <h:form id="ModuloViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{moduloController.selected != null}">
+                        <h:outputText value="#{bundle.ViewModuloLabel_idModulo}"/>
+                        <h:outputText value="#{moduloController.selected.idModulo}" title="#{bundle.ViewModuloTitle_idModulo}"/>
+                        <h:outputText value="#{bundle.ViewModuloLabel_nombre}"/>
+                        <h:outputText value="#{moduloController.selected.nombre}" title="#{bundle.ViewModuloTitle_nombre}"/>
+                        <h:outputText value="#{bundle.ViewModuloLabel_descripcion}"/>
+                        <h:outputText value="#{moduloController.selected.descripcion}" title="#{bundle.ViewModuloTitle_descripcion}"/>
+                        <h:outputText value="#{bundle.ViewModuloLabel_idCurso}"/>
+                        <h:outputText value="#{moduloController.selected.idCurso}" title="#{bundle.ViewModuloTitle_idCurso}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="ModuloViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="CursoDirigidoaViewDlg" widgetVar="CursoDirigidoaViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewCursoDirigidoaTitle}">
+            <h:form id="CursoDirigidoaViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{cursoDirigidoaController.selected != null}">
+                        <h:outputText value="#{bundle.ViewCursoDirigidoaLabel_idCursoDirigidoa}"/>
+                        <h:outputText value="#{cursoDirigidoaController.selected.idCursoDirigidoa}" title="#{bundle.ViewCursoDirigidoaTitle_idCursoDirigidoa}"/>
+                        <h:outputText value="#{bundle.ViewCursoDirigidoaLabel_idDirigidoa}"/>
+                        <h:outputText value="#{cursoDirigidoaController.selected.idDirigidoa}" title="#{bundle.ViewCursoDirigidoaTitle_idDirigidoa}"/>
+                        <h:outputText value="#{bundle.ViewCursoDirigidoaLabel_idCurso}"/>
+                        <h:outputText value="#{cursoDirigidoaController.selected.idCurso}" title="#{bundle.ViewCursoDirigidoaTitle_idCurso}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="CursoDirigidoaViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

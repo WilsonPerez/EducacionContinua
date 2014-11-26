@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="CursoInstructorEditDlg" widgetVar="CursoInstructorEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditCursoInstructorTitle}">
+            <h:form id="CursoInstructorEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{cursoInstructorController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditCursoInstructorLabel_idCursoInstructor}" for="idCursoInstructor" />
+                        <p:inputText id="idCursoInstructor" value="#{cursoInstructorController.selected.idCursoInstructor}" title="#{bundle.EditCursoInstructorTitle_idCursoInstructor}" required="true" requiredMessage="#{bundle.EditCursoInstructorRequiredMessage_idCursoInstructor}"/>
+                        <p:outputLabel value="#{bundle.EditCursoInstructorLabel_idCurso}" for="idCurso" />
+                        <p:selectOneMenu id="idCurso" value="#{cursoInstructorController.selected.idCurso}" required="true" requiredMessage="#{bundle.EditCursoInstructorRequiredMessage_idCurso}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{cursoController.itemsAvailableSelectOne}"
+                                           var="idCursoItem"
+                                           itemValue="#{idCursoItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditCursoInstructorLabel_idInstructor}" for="idInstructor" />
+                        <p:selectOneMenu id="idInstructor" value="#{cursoInstructorController.selected.idInstructor}" required="true" requiredMessage="#{bundle.EditCursoInstructorRequiredMessage_idInstructor}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{instructorController.itemsAvailableSelectOne}"
+                                           var="idInstructorItem"
+                                           itemValue="#{idInstructorItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{cursoInstructorController.update}" value="#{bundle.Save}" update="display,:CursoInstructorListForm:datalist,:growl" oncomplete="handleSubmit(args, 'CursoInstructorEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="CursoInstructorEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

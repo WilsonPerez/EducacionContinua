@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ModuloCreateDlg" widgetVar="ModuloCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateModuloTitle}">
+            <h:form id="ModuloCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{moduloController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateModuloLabel_idModulo}" for="idModulo" />
+                        <p:inputText id="idModulo" value="#{moduloController.selected.idModulo}" title="#{bundle.CreateModuloTitle_idModulo}" required="true" requiredMessage="#{bundle.CreateModuloRequiredMessage_idModulo}"/>
+                        <p:outputLabel value="#{bundle.CreateModuloLabel_nombre}" for="nombre" />
+                        <p:inputText id="nombre" value="#{moduloController.selected.nombre}" title="#{bundle.CreateModuloTitle_nombre}" required="true" requiredMessage="#{bundle.CreateModuloRequiredMessage_nombre}"/>
+                        <p:outputLabel value="#{bundle.CreateModuloLabel_descripcion}" for="descripcion" />
+                        <p:inputText id="descripcion" value="#{moduloController.selected.descripcion}" title="#{bundle.CreateModuloTitle_descripcion}" />
+                        <p:outputLabel value="#{bundle.CreateModuloLabel_idCurso}" for="idCurso" />
+                        <p:selectOneMenu id="idCurso" value="#{moduloController.selected.idCurso}" >
+                            <f:selectItems value="#{cursoController.itemsAvailableSelectOne}"
+                                           var="idCursoItem"
+                                           itemValue="#{idCursoItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{moduloController.create}" value="#{bundle.Save}" update="display,:ModuloListForm:datalist,:growl" oncomplete="handleSubmit(args,'ModuloCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="ModuloCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>
