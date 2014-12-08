@@ -24,6 +24,9 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
+import java.io.Serializable;
+import java.util.Collection;
+
 /**
  *
  * @author wilson
@@ -35,9 +38,9 @@ public class CursoL implements Serializable {
     private String nombre;
     private String descripccion;
     private Tipo idTipo;
-    private Collection<CursoInstructor> cursoInstructorCollection;
+    private Collection<Instructor> instructorCollection;
     private Collection<Modulo> moduloCollection;
-    private Collection<CursoDirigidoa> cursoDirigidoaCollection;
+    private Collection<DirigidoA> dirigidoaCollection;
     private Collection<Detalle> detalleCollection;
 
     public CursoL() {
@@ -84,12 +87,12 @@ public class CursoL implements Serializable {
         this.idTipo = idTipo;
     }
 
-     public Collection<CursoInstructor> getCursoInstructorCollection() {
-        return cursoInstructorCollection;
+     public Collection<Instructor> getCursoInstructorCollection() {
+        return instructorCollection;
     }
 
-    public void setCursoInstructorCollection(Collection<CursoInstructor> cursoInstructorCollection) {
-        this.cursoInstructorCollection = cursoInstructorCollection;
+    public void setCursoInstructorCollection(Collection<Instructor> cursoInstructorCollection) {
+        this.instructorCollection = cursoInstructorCollection;
     }
 
     public Collection<Modulo> getModuloCollection() {
@@ -100,12 +103,12 @@ public class CursoL implements Serializable {
         this.moduloCollection = moduloCollection;
     }
 
-    public Collection<CursoDirigidoa> getCursoDirigidoaCollection() {
-        return cursoDirigidoaCollection;
+    public Collection<DirigidoA> getCursoDirigidoaCollection() {
+        return dirigidoaCollection;
     }
 
-    public void setCursoDirigidoaCollection(Collection<CursoDirigidoa> cursoDirigidoaCollection) {
-        this.cursoDirigidoaCollection = cursoDirigidoaCollection;
+    public void setCursoDirigidoaCollection(Collection<DirigidoA> cursoDirigidoaCollection) {
+        this.dirigidoaCollection = cursoDirigidoaCollection;
     }
 
     public Collection<Detalle> getDetalleCollection() {

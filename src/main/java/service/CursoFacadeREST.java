@@ -5,7 +5,16 @@
  */
 package service;
 
+import edu.ucuenca.controller.manager.CursoL;
 import edu.ucuenca.edcontinua.entities.Curso;
+import edu.ucuenca.edcontinua.entities.CursoDirigidoa;
+import edu.ucuenca.edcontinua.entities.CursoInstructor;
+import edu.ucuenca.edcontinua.entities.Detalle;
+import edu.ucuenca.edcontinua.entities.DirigidoA;
+import edu.ucuenca.edcontinua.entities.Instructor;
+import edu.ucuenca.edcontinua.entities.Modulo;
+import edu.ucuenca.edcontinua.entities.Tipo;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -55,12 +64,54 @@ public class CursoFacadeREST extends AbstractFacade<Curso> {
 
     @GET
     @Path("{id}")
-    @Produces({"application/xml", "application/json"})
-    public Curso find(@PathParam("id") String id) {
-        int a=0;
-        return super.find(id);
+    @Produces({"application/json"})
+    public CursoL find(@PathParam("id") String id) {
+    
+        CursoL cursoR=new CursoL();
+        Curso curso = super.find(id);
+        
+        cursoR.setNombre(curso.getNombre());
+        cursoR.setDescripccion(curso.getDescripccion());
+        cursoR.setIdCurso(curso.getIdCurso());
+        
+        Tipo idTipo = curso.getIdTipo();
+        idTipo.setCursoCollection(null);
+        cursoR.setIdTipo(idTipo);
+        
+        List<Modulo> moduloCollection = (List)curso.getModuloCollection();
+        for (int i=0; i<moduloCollection.size(); i++){
+            moduloCollection.get(i).setIdCurso(null);
+        }
+        cursoR.setModuloCollection(moduloCollection);
+        
+        List<Detalle> detalleCollection = (List)curso.getDetalleCollection();
+        for (int i=0; i<detalleCollection.size(); i++){
+            detalleCollection.get(i).setIdCurso(null);
+        }
+        cursoR.setDetalleCollection(detalleCollection);
+        
+        List<CursoInstructor> cursoInstructorCollection = (List)curso.getCursoInstructorCollection();
+        List<Instructor> instructores=new ArrayList<Instructor>();
+        for (int i=0; i<cursoInstructorCollection.size(); i++){
+            Instructor idInstructor = cursoInstructorCollection.get(i).getIdInstructor();
+            idInstructor.setCursoInstructorCollection(null);
+            
+            instructores.add(idInstructor);
+        }
+        cursoR.setCursoInstructorCollection(instructores);
+        
+        List<CursoDirigidoa> cursoDirigidoaCollection = (List)curso.getCursoDirigidoaCollection();
+        List<DirigidoA> dirigidosa=new ArrayList<DirigidoA>();
+        for (int i=0; i<cursoDirigidoaCollection.size(); i++){
+            DirigidoA dirigidoa=cursoDirigidoaCollection.get(i).getIdDirigidoa();
+            dirigidoa.setCursoDirigidoaCollection(null);
+            dirigidosa.add(dirigidoa);
+        }
+        cursoR.setCursoDirigidoaCollection(dirigidosa);
+        
+        return cursoR;
     }
-
+    
     @GET
     @Override
     @Produces({"application/xml", "application/json"})
