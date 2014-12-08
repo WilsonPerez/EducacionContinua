@@ -116,7 +116,62 @@ public class CursoFacadeREST extends AbstractFacade<Curso> {
     @Override
     @Produces({"application/xml", "application/json"})
     public List<Curso> findAll() {
-        return super.findAll();
+        CursoL cursoR=new CursoL();
+        
+        List<Curso> detalles = super.findWhere("SELECT w FROM Detalle w Order by w.fechaInscripcion");
+        List<Curso> cursos = new ArrayList<Curso>();
+        for (int i=0; i<detalles.size(); i++){
+            //List<Detalle> detalleCollection = (List)detalles.get(i).getIdCurso();
+            detalles.get(i).getIdCurso();
+            //detalleCollection.get(i).getIdCurso();
+            //cursos.add(detalleCollection.get(0).getIdCurso());
+        }
+        //List<Detalle> detalleCollection = (List)detalles.get(0).getDetalleCollection();
+        //detalleCollection.get(0).getIdCurso();
+        
+        Curso curso = super.find("1");
+        cursoR.setNombre(curso.getNombre());
+        cursoR.setDescripccion(curso.getDescripccion());
+        cursoR.setIdCurso(curso.getIdCurso());
+        
+        Tipo idTipo = curso.getIdTipo();
+        idTipo.setCursoCollection(null);
+        cursoR.setIdTipo(idTipo);
+        
+        List<Modulo> moduloCollection = (List)curso.getModuloCollection();
+        for (int i=0; i<moduloCollection.size(); i++){
+            moduloCollection.get(i).setIdCurso(null);
+        }
+        cursoR.setModuloCollection(moduloCollection);
+        
+        List<Detalle> detalleCollection = (List)curso.getDetalleCollection();
+        for (int i=0; i<detalleCollection.size(); i++){
+            detalleCollection.get(i).setIdCurso(null);
+        }
+        cursoR.setDetalleCollection(detalleCollection);
+        
+        List<CursoInstructor> cursoInstructorCollection = (List)curso.getCursoInstructorCollection();
+        List<Instructor> instructores=new ArrayList<Instructor>();
+        for (int i=0; i<cursoInstructorCollection.size(); i++){
+            Instructor idInstructor = cursoInstructorCollection.get(i).getIdInstructor();
+            idInstructor.setCursoInstructorCollection(null);
+            
+            instructores.add(idInstructor);
+        }
+        cursoR.setCursoInstructorCollection(instructores);
+        
+        List<CursoDirigidoa> cursoDirigidoaCollection = (List)curso.getCursoDirigidoaCollection();
+        List<DirigidoA> dirigidosa=new ArrayList<DirigidoA>();
+        for (int i=0; i<cursoDirigidoaCollection.size(); i++){
+            DirigidoA dirigidoa=cursoDirigidoaCollection.get(i).getIdDirigidoa();
+            dirigidoa.setCursoDirigidoaCollection(null);
+            dirigidosa.add(dirigidoa);
+        }
+        cursoR.setCursoDirigidoaCollection(dirigidosa);
+        
+        
+        //return super.findAll();
+        return null;
     }
 
     @GET

@@ -37,6 +37,11 @@ public abstract class AbstractFacade<T> {
         return getEntityManager().find(entityClass, id);
     }
     
+    public List<T> findWhere(String consulta) {
+        List resultList = getEntityManager().createQuery(consulta).getResultList();
+        return resultList;
+    }
+    
     public T findAllCurso(Object id) {
         return getEntityManager().find(entityClass, id);
     }
