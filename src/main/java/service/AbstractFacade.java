@@ -5,6 +5,7 @@
  */
 package service;
 
+import edu.ucuenca.controller.manager.CursoL;
 import java.util.List;
 import javax.persistence.EntityManager;
 
@@ -52,6 +53,12 @@ public abstract class AbstractFacade<T> {
         return getEntityManager().createQuery(cq).getResultList();
     }
 
+    public List<CursoL> findAllRange() {
+        javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
+        cq.select(cq.from(entityClass));
+        return getEntityManager().createQuery(cq).getResultList();
+    }
+        
     public List<T> findRange(int[] range) {
         javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
         cq.select(cq.from(entityClass));

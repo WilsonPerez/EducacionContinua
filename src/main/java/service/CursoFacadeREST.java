@@ -16,6 +16,7 @@ import edu.ucuenca.edcontinua.entities.Modulo;
 import edu.ucuenca.edcontinua.entities.Tipo;
 import java.util.ArrayList;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -37,6 +38,10 @@ import javax.ws.rs.Produces;
 public class CursoFacadeREST extends AbstractFacade<Curso> {
     @PersistenceContext(unitName = "edu.ucuenca_mavenproject2_war_1.0-SNAPSHOTPU")
     private EntityManager em;
+    
+    @EJB
+    private edu.ucuenca.edcontinua.farcade.DetalleFacade ejbFacadeDetalle;
+
 
     public CursoFacadeREST() {
         super(Curso.class);
@@ -114,11 +119,110 @@ public class CursoFacadeREST extends AbstractFacade<Curso> {
     
     @GET
     @Override
+    @Produces({"application/json"})
+    public List<CursoL> findAllRange() {
+        //group by educacion_continua.detalle.id_curso
+        List<Detalle> detalles = ejbFacadeDetalle.findWhere("SELECT w FROM Detalle w Order by w.fechaInscripcion");
+        List<Curso> cursos = new ArrayList<Curso>();
+        List<CursoL> cursosl = new ArrayList<CursoL>();
+        
+        for (int i=0; i<detalles.size(); i++){
+            List<Detalle> get =new ArrayList<Detalle>();
+            get.add(detalles.get(i));
+            
+            Curso cursoaux = new Curso();
+            cursoaux.setCursoDirigidoaCollection(detalles.get(i).getIdCurso().getCursoDirigidoaCollection());
+            cursoaux.setCursoInstructorCollection(detalles.get(i).getIdCurso().getCursoInstructorCollection());
+            cursoaux.setDescripccion(detalles.get(i).getIdCurso().getDescripccion());
+            cursoaux.setIdCurso(detalles.get(i).getIdCurso().getIdCurso());
+            cursoaux.setIdTipo(detalles.get(i).getIdCurso().getIdTipo());
+            cursoaux.setModuloCollection(detalles.get(i).getIdCurso().getModuloCollection());
+            cursoaux.setNombre(detalles.get(i).getIdCurso().getNombre());
+            cursoaux.setDetalleCollection(get);
+            
+            cursos.add(cursoaux);
+        }
+        
+        for (int i=0; i<cursos.size(); i++){
+            CursoL cursoR=new CursoL();
+            //CursoL cursoR=cursos.get(i);
+            cursoR.setNombre(cursos.get(i).getNombre());
+            cursoR.setDescripccion(cursos.get(i).getDescripccion());
+            cursoR.setIdCurso(cursos.get(i).getIdCurso());
+
+            Tipo idTipo = cursos.get(i).getIdTipo();
+            idTipo.setCursoCollection(null);
+            cursoR.setIdTipo(idTipo);
+
+            List<Modulo> moduloCollection = (List)cursos.get(i).getModuloCollection();
+            List<Modulo> moduloCollection2 =new ArrayList<Modulo>();
+            //cursoR.setModuloCollection(moduloCollection);
+            
+            moduloCollection = (List)cursos.get(i).getModuloCollection();
+            for (int j=0; j<moduloCollection.size(); j++){
+                Modulo modulo=new Modulo();
+                modulo.setDescripcion(moduloCollection.get(j).getDescripcion());
+                modulo.setIdModulo(moduloCollection.get(j).getIdModulo());
+                modulo.setNombre(moduloCollection.get(j).getNombre());
+                
+                moduloCollection2.add(modulo);
+                //moduloCollection.get(j).setIdCurso(null);
+            }
+            cursoR.setModuloCollection(moduloCollection2);
+
+            List<Detalle> detalleCollection = (List)cursos.get(i).getDetalleCollection();
+            List<Detalle> detalleCollection2 = new ArrayList<Detalle>();
+            for (int j=0; j<detalleCollection.size(); j++){
+                Detalle detalleC=new Detalle();
+                detalleC.setDireccionCurso(detalleCollection.get(j).getDireccionCurso());
+                detalleC.setFechaInscripcion(detalleCollection.get(j).getFechaInscripcion());
+                detalleC.setIdDetalle(detalleCollection.get(j).getIdDetalle());
+                detalleC.setLugarInscripcion(detalleCollection.get(j).getLugarInscripcion());
+                detalleC.setNumCupos(detalleCollection.get(j).getNumCupos());
+                detalleC.setNumHoras(detalleCollection.get(j).getNumHoras());
+                detalleC.setNumTelefono(detalleCollection.get(j).getNumTelefono());
+                detalleC.setObjetivos(detalleCollection.get(j).getObjetivos());
+                detalleC.setPrecio(detalleCollection.get(j).getPrecio());
+                
+                detalleCollection2.add(detalleC);
+            }
+            cursoR.setDetalleCollection(detalleCollection2);
+
+            List<CursoInstructor> cursoInstructorCollection = (List)cursos.get(i).getCursoInstructorCollection();
+            List<Instructor> instructores=new ArrayList<Instructor>();
+            for (int j=0; j<cursoInstructorCollection.size(); j++){
+                Instructor idInstructor = cursoInstructorCollection.get(j).getIdInstructor();
+                idInstructor.setCursoInstructorCollection(null);
+
+                instructores.add(idInstructor);
+            }
+            cursoR.setCursoInstructorCollection(instructores);
+
+            List<CursoDirigidoa> cursoDirigidoaCollection = (List)cursos.get(i).getCursoDirigidoaCollection();
+            List<DirigidoA> dirigidosa=new ArrayList<DirigidoA>();
+            for (int j=0; j<cursoDirigidoaCollection.size(); j++){
+                DirigidoA dirigidoa=cursoDirigidoaCollection.get(j).getIdDirigidoa();
+                dirigidoa.setCursoDirigidoaCollection(null);
+                dirigidosa.add(dirigidoa);
+            }
+            cursoR.setCursoDirigidoaCollection(dirigidosa);
+
+            cursosl.add(cursoR);
+        }
+        //return super.findAll();
+        return cursosl;
+    }
+    
+    @GET
+    @Override
     @Produces({"application/xml", "application/json"})
     public List<Curso> findAll() {
         CursoL cursoR=new CursoL();
         
-        List<Curso> detalles = super.findWhere("SELECT w FROM Detalle w Order by w.fechaInscripcion");
+        //List<Curso> detalles = super.findWhere("SELECT w FROM Detalle w Order by w.fechaInscripcion");
+        
+        List<Detalle> detalles =ejbFacadeDetalle.findWhere("SELECT w FROM Detalle w Order by w.fechaInscripcion");
+        
         List<Curso> cursos = new ArrayList<Curso>();
         for (int i=0; i<detalles.size(); i++){
             //List<Detalle> detalleCollection = (List)detalles.get(i).getIdCurso();
