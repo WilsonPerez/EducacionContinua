@@ -10,10 +10,11 @@
 
         <p:dialog id="ModuloEditDlg" widgetVar="ModuloEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditModuloTitle}">
             <h:form id="ModuloEditForm">
+                <div id="listaL">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{moduloController.selected != null}">
                         <p:outputLabel value="#{bundle.EditModuloLabel_idModulo}" for="idModulo" />
-                        <p:inputText id="idModulo" value="#{moduloController.selected.idModulo}" title="#{bundle.EditModuloTitle_idModulo}" required="true" requiredMessage="#{bundle.EditModuloRequiredMessage_idModulo}"/>
+                        <p:inputText id="idModulo" value="#{moduloController.selected.idModulo}" title="#{bundle.EditModuloTitle_idModulo}" disabled="true"/>
                         <p:outputLabel value="#{bundle.EditModuloLabel_nombre}" for="nombre" />
                         <p:inputText id="nombre" value="#{moduloController.selected.nombre}" title="#{bundle.EditModuloTitle_nombre}" required="true" requiredMessage="#{bundle.EditModuloRequiredMessage_nombre}"/>
                         <p:outputLabel value="#{bundle.EditModuloLabel_descripcion}" for="descripcion" />
@@ -26,9 +27,10 @@
                                            itemValue="#{idCursoItem}"/>
                         </p:selectOneMenu>
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{moduloController.update}" value="#{bundle.Save}" update="display,:ModuloListForm:datalist,:growl" oncomplete="handleSubmit(args, 'ModuloEditDialog');"/>
+                    <p:commandButton actionListener="#{moduloController.update}" value="#{bundle.Save}" update="display,:ModuloListForm:datalist,:growl" oncomplete="PF('ModuloEditDialog').hide();"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="ModuloEditDialog.hide()"/>
                 </h:panelGroup>
+                </div>
             </h:form>
         </p:dialog>
 

@@ -30,15 +30,33 @@ public class DetalleController implements Serializable {
     @EJB
     private edu.ucuenca.edcontinua.farcade.DetalleFacade ejbFacadeDetalle;
     
+    
     private List<Detalle> items = null;
     private List<Detalle> itemsWhere = null;
     private Detalle selected;
+    Curso cursoSelect=null;
+    
+    boolean createDetalle=false;
+    boolean visibleCurso=false;
 
     public DetalleController() {
     }
 
     public Detalle getSelected() {
+        if(selected==null){
+            selected=new Detalle();
+            if(createDetalle==true)
+                selected.setIdCurso(cursoSelect);
+        }
         return selected;
+    }
+
+    public boolean isVisibleCurso() {
+        return visibleCurso;
+    }
+
+    public void setVisibleCurso(boolean visibleCurso) {
+        this.visibleCurso = visibleCurso;
     }
 
     public void SetItemsWhere(Curso selected) {
@@ -74,9 +92,27 @@ public class DetalleController implements Serializable {
     public Detalle prepareCreate() {
         selected = new Detalle();
         initializeEmbeddableKey();
+        this.visibleCurso=false;
+        return selected;
+    }
+    public Detalle prepareCreate(Curso curso) {
+        this.cursoSelect=curso;
+        this.visibleCurso=true;
+        createDetalle=true;
+        selected = new Detalle();
+        selected.setIdCurso(curso);
+        initializeEmbeddableKey();
         return selected;
     }
 
+    public void create(Detalle detalleGuardar, edu.ucuenca.edcontinua.farcade.DetalleFacade ejb) {
+        this.ejbFacade=ejb;
+        selected=detalleGuardar;
+        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("DetalleCreated"));
+        if (!JsfUtil.isValidationFailed()) {
+            items = null;    // Invalidate list of items to trigger re-query.
+        }
+    }
     public void create() {
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("DetalleCreated"));
         if (!JsfUtil.isValidationFailed()) {
@@ -107,10 +143,12 @@ public class DetalleController implements Serializable {
         if (selected != null) {
             setEmbeddableKeys();
             try {
-                if (persistAction != PersistAction.DELETE) {
-                    getFacade().edit(selected);
-                } else {
+                if (persistAction== PersistAction.DELETE) {
                     getFacade().remove(selected);
+                }if (persistAction== PersistAction.CREATE) {
+                    getFacade().create(selected);
+                }if (persistAction== PersistAction.UPDATE){
+                    getFacade().edit(selected);
                 }
                 JsfUtil.addSuccessMessage(successMessage);
             } catch (EJBException ex) {

@@ -10,6 +10,7 @@
 
         <p:dialog id="ModuloViewDlg" widgetVar="ModuloViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewModuloTitle}">
             <h:form id="ModuloViewForm">
+                <div id="listaL">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{moduloController.selected != null}">
                         <h:outputText value="#{bundle.ViewModuloLabel_idModulo}"/>
@@ -23,6 +24,7 @@
                     </p:panelGrid>
                     <p:commandButton value="#{bundle.Close}" onclick="ModuloViewDialog.hide()"/>
                 </h:panelGroup>
+                </div>
             </h:form>
         </p:dialog>
 

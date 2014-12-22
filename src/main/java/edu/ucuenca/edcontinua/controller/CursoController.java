@@ -5,6 +5,7 @@ import edu.ucuenca.edcontinua.controller.util.JsfUtil;
 import edu.ucuenca.edcontinua.controller.util.JsfUtil.PersistAction;
 import edu.ucuenca.edcontinua.entities.CursoDirigidoa;
 import edu.ucuenca.edcontinua.entities.CursoInstructor;
+import edu.ucuenca.edcontinua.entities.Detalle;
 import edu.ucuenca.edcontinua.entities.DirigidoA;
 import edu.ucuenca.edcontinua.entities.Instructor;
 import edu.ucuenca.edcontinua.entities.Modulo;
@@ -26,6 +27,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.faces.event.AjaxBehaviorEvent;
 import org.primefaces.event.TransferEvent;
 import org.primefaces.model.DualListModel;
 
@@ -48,16 +50,28 @@ public class CursoController implements Serializable {
     private edu.ucuenca.edcontinua.farcade.CursoInstructorFacade ejbFacadeCursoInstructor;
     @EJB
     private edu.ucuenca.edcontinua.farcade.CursoDirigidoaFacade ejbFacadeCursoDirigidoa;
+    @EJB
+    private edu.ucuenca.edcontinua.farcade.DetalleFacade ejbFacadeDetalle;
+    
+    //private Detalle selected;
     
     
     private DualListModel<Modulo> themes;
     private Modulo theme = new Modulo();
     
     private DualListModel<DirigidoA> dirigidosa;
+    
+    private DualListModel<DirigidoA> dirigidosaM;    //Dirigido A cuando sea a modificar
+    
     private DirigidoA dirigidoa = new DirigidoA();
     
     private DualListModel<Instructor> instructores;
     private Instructor instructor = new Instructor();
+    
+    List<CursoInstructor> intructoresCurso = new ArrayList<CursoInstructor>();  //Lo q se tenia antes en DualListModel<Instructor>
+    List<CursoDirigidoa> DirigidoaCurso = new ArrayList<CursoDirigidoa>();  //Lo q se tenia antes en DualListModel<CursoDirigidoa>
+    
+    Detalle detalleGuardar = new Detalle();
 
     public CursoController() {
         
@@ -74,6 +88,7 @@ public class CursoController implements Serializable {
         
         List<Instructor> instructores2 = ejbFacadeInstructor.findAll();
         List<Instructor> instructores3 = new ArrayList<Instructor>();
+        
         instructores= new DualListModel<Instructor>(instructores2, instructores3);
     }
 
@@ -118,11 +133,20 @@ public class CursoController implements Serializable {
     }
 
     public DualListModel<DirigidoA> getDirigidosa() {
+        
         return dirigidosa;
     }
 
     public void setDirigidosa(DualListModel<DirigidoA> dirigidosa) {
         this.dirigidosa = dirigidosa;
+    }
+    
+    public DualListModel<DirigidoA> getDirigidosaM() {
+        return dirigidosaM;
+    }
+
+    public void setDirigidosaM(DualListModel<DirigidoA> dirigidosaM) {
+        this.dirigidosaM = dirigidosaM;
     }
 
     public DirigidoA getDirigidoa() {
@@ -149,7 +173,8 @@ public class CursoController implements Serializable {
         return selected;
     }
 
-    public void create() {
+    public void create(Detalle detalle) {
+        detalleGuardar=detalle;
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("CursoCreated"));
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
@@ -173,48 +198,98 @@ public class CursoController implements Serializable {
             items = getFacade().findAll();
         }
         return items;
-    }/*
-    public List<Curso> getItemsInstructor() {
-        List<CursoInstructor> findWhere = ejbFacadeInstructor.findWhere("SELECT distinct w FROM CursoInstructor w WHERE w.idCurso.idCurso='"+selected.getIdCurso()+"'");
-        
-        List<Instructor> itemsIns = new ArrayList<Instructor>();
-        for(int i=0; i<findWhere.size(); i++){
-            itemsIns.add(findWhere.get(i).getIdInstructor());
-        }
-        
-            
-        InstructorController instructorController=new InstructorController();
-        instructorController.SetItemsWhere(itemsIns);
-        return items;
-    }*/
+    }
+    
     public List<Curso> getItemsInstructor(Curso selected) {
-       
-        //SELECT distinct w FROM WsLibro w WHERE w.titulo like '%"+titulo+"%' order by w.mfn
-        /*
-        List<CursoInstructor> findWhere = ejbFacadeInstructor.findWhere("SELECT distinct w FROM CursoInstructor w WHERE w.idCurso.idCurso='"+selected.getIdCurso()+"'");
-        
-        List<Instructor> itemsIns = new ArrayList<Instructor>();
-        for(int i=0; i<findWhere.size(); i++){
-            itemsIns.add(findWhere.get(i).getIdInstructor());
-        }
-        
-            
-        InstructorController instructorController=new InstructorController();
-        instructorController.SetItemsWhere(itemsIns);*/
         return items;
     }
 
+    /**
+     Se ejecuta cuando se selecciona la opcion de modificar instructor
+    */
+    public void editInstructor(){
+        setDataInstructor();
+        setDataDirigidoa();
+    }
+    /**
+     Se coloca los datos al momento de Editar el Instructor
+    */
+    public void setDataInstructor(){
+        List<Instructor> instructores2 = ejbFacadeInstructor.findAll();
+        List<Instructor> instructores3 = new ArrayList<Instructor>();
+        if(selected!=null){
+            
+            intructoresCurso = ejbFacadeCursoInstructor.findWhere("SELECT w FROM CursoInstructor w WHERE w.idCurso.idCurso='"+selected.getIdCurso()+"'");  
+            if(intructoresCurso.size()>0){
+                for(int i=0; i<intructoresCurso.size(); i++){
+                    List<Instructor> findWhere = ejbFacadeInstructor.findWhere("SELECT w FROM Instructor w WHERE w.ci='"+intructoresCurso.get(i).getIdInstructor().getCi()+"'");
+                    instructores3.add(findWhere.get(0));
+                }
+
+                List<Instructor> instructoresAux = new ArrayList<Instructor>();
+                boolean bandera=true;
+                for(int i=0; i<instructores2.size(); i++){
+                    bandera=true;
+                    for(int j=0; j<intructoresCurso.size(); j++){
+                        if(instructores2.get(i).getCi().compareTo(instructores3.get(j).getCi())==0)
+                            bandera=false;
+                    }
+                    if(bandera==true)
+                        instructoresAux.add(instructores2.get(i));
+                }
+                instructores2=instructoresAux;
+            }
+        }
+        instructores= new DualListModel<Instructor>(instructores2, instructores3);
+    }
+    
+    /**
+     Se coloca los datos al momento de Editar el Dirigidoa
+    */
+    public void setDataDirigidoa(){
+        List<DirigidoA> instructores2 = ejbFacadeDigido.findAll();
+        List<DirigidoA> instructores3 = new ArrayList<DirigidoA>();
+        if(selected!=null){
+            
+            DirigidoaCurso = ejbFacadeCursoDirigidoa.findWhere("SELECT w FROM CursoDirigidoa w WHERE w.idCurso.idCurso='"+selected.getIdCurso()+"'");  
+            if(DirigidoaCurso.size()>0){
+                for(int i=0; i<DirigidoaCurso.size(); i++){
+                    List<DirigidoA> findWhere = ejbFacadeDigido.findWhere("SELECT w FROM DirigidoA w WHERE w.idDirigidoa='"+DirigidoaCurso.get(i).getIdDirigidoa().getIdDirigidoa()+"'");
+                    instructores3.add(findWhere.get(0));
+                }
+
+                List<DirigidoA> instructoresAux = new ArrayList<DirigidoA>();
+                boolean bandera=true;
+                for(int i=0; i<instructores2.size(); i++){
+                    bandera=true;
+                    for(int j=0; j<DirigidoaCurso.size(); j++){
+                        if(instructores2.get(i).getIdDirigidoa().compareTo(instructores3.get(j).getIdDirigidoa())==0)
+                            bandera=false;
+                    }
+                    if(bandera==true)
+                        instructoresAux.add(instructores2.get(i));
+                }
+                instructores2=instructoresAux;
+            }
+        }
+        dirigidosa= new DualListModel<DirigidoA>(instructores2, instructores3);
+    }
+        
     private void persist(PersistAction persistAction, String successMessage) {
         if (selected != null) {
             setEmbeddableKeys();
             try {
-                if (persistAction != PersistAction.DELETE) {
+                if (persistAction.toString().compareTo(PersistAction.CREATE.toString())==0) {
                     getFacade().edit(selected);
-                    
+                    GuardarDetalle();
                     GuardarInstructor();
                     GuardarDirigidoa();
                     
-                } else {
+                } else if(persistAction.toString().compareTo(PersistAction.UPDATE.toString())==0){
+                    getFacade().edit(selected);
+                    EditInstructorDualList();
+                    EditDirigidosDualList();
+                }else{
                     getFacade().remove(selected);
                 }
                 JsfUtil.addSuccessMessage(successMessage);
@@ -291,8 +366,12 @@ public class CursoController implements Serializable {
     
     public void onTransfer(TransferEvent event) {
         StringBuilder builder = new StringBuilder();
+    }  
+    
+    public void onTransferInstructor(TransferEvent event) {
+        StringBuilder builder = new StringBuilder();
         for(Object item : event.getItems()) {
-            builder.append(((Modulo) item).getNombre()).append("<br />");
+            builder.append(((Instructor) item).getNombre()).append("<br />");
         }
          
         FacesMessage msg = new FacesMessage();
@@ -303,6 +382,7 @@ public class CursoController implements Serializable {
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }  
 
+    /*
     public void GuardarInstructor(){
         CursoInstructor instanceCursoInstructor=new CursoInstructor();
         instanceCursoInstructor.setIdCurso(selected);
@@ -320,22 +400,109 @@ public class CursoController implements Serializable {
             CursoInstructorController cursoInstructor=new CursoInstructorController();
             cursoInstructor.create(instanceCursoInstructor,ejbFacadeCursoInstructor);
         }
+    }*/
+    
+    public void GuardarInstructor(){
+        for(int i=0; i<instructores.getTarget().size(); i++){
+            GuardarInstructorCurso(instructores.getTarget().get(i).getCi());
+        }
     }
     
-    public void GuardarDirigidoa(){
+    public void GuardarInstructorCurso(String ciInstructor){
+        CursoInstructor instanceCursoInstructor=new CursoInstructor();
+        instanceCursoInstructor.setIdCurso(selected);
+        instanceCursoInstructor.setIdInstructor(ejbFacadeInstructor.findWhere("SELECT w FROM Instructor w WHERE w.ci='"+ciInstructor+"'").get(0));
+
+        CursoInstructorController cursoInstructor=new CursoInstructorController();
+        cursoInstructor.create(instanceCursoInstructor,ejbFacadeCursoInstructor);
+    }
+    
+    /**
+     *  Actualiza los datos del DualListMOdel relacionado al instructor
+     */
+    public void EditInstructorDualList(){
+        CursoInstructor instanceCursoInstructor=new CursoInstructor();
+        instanceCursoInstructor.setIdCurso(selected);
+        
+        Curso newCurso=new Curso();
+        newCurso=selected;
+        instanceCursoInstructor.setIdCurso(newCurso);
+        
+        boolean bandera=true;
+        //Comprobamos los eliminados
+        for(int i=0; i<intructoresCurso.size(); i++){
+            bandera=true;
+            for(int j=0; j<instructores.getTarget().size(); j++){
+                if(instructores.getTarget().get(j).getCi().compareTo(intructoresCurso.get(i).getIdInstructor().getCi())==0)
+                    bandera=false;
+            }if (bandera==true)
+                ejbFacadeCursoInstructor.remove(intructoresCurso.get(i));
+        }
+        
+        //Comprobamos los agregados
+        for(int i=0; i<instructores.getTarget().size(); i++){
+            bandera=true;
+            for(int j=0; j<intructoresCurso.size(); j++){
+                if(instructores.getTarget().get(i).getCi().compareTo(intructoresCurso.get(j).getIdInstructor().getCi())==0)
+                    bandera=false;
+            }if (bandera==true)
+                GuardarInstructorCurso(instructores.getTarget().get(i).getCi());
+        }
+    }
+    
+    /**
+     *  Actualiza los datos del DualListMOdel relacionado a DirigidoA
+     */
+    public void EditDirigidosDualList(){
+        //CursoDirigidoa instanceCursoDirigidoa=new CursoDirigidoa();
         CursoDirigidoa instanceCursoDirigidoa=new CursoDirigidoa();
         instanceCursoDirigidoa.setIdCurso(selected);
         
-        for(int i=0; i<dirigidosa.getTarget().size(); i++){
-            DirigidoA instanceDirigidoA=new DirigidoA();
-            instanceDirigidoA.setIdDirigidoa(dirigidosa.getTarget().get(i).getIdDirigidoa());
-            
-            //instanceCursoInstructor.setIdInstructor(ejbFacadeInstructor.findWhere("SELECT w FROM Instructor w WHERE w.ci='"+instructores.getTarget().get(0).getCi()+"'").get(0));
-            instanceCursoDirigidoa.setIdDirigidoa(instanceDirigidoA);
-            //.setIdInstructor(ejbFacadeInstructor.findWhere("SELECT w FROM Instructor w WHERE w.ci='"+instructores.getTarget().get(0).getCi()+"'").get(0));
-            
-            CursoDirigidoaController cursoDirigidoa=new CursoDirigidoaController();
-            cursoDirigidoa.create(instanceCursoDirigidoa,ejbFacadeCursoDirigidoa);
+        boolean bandera=true;
+        //Comprobamos los eliminados
+        for(int i=0; i<DirigidoaCurso.size(); i++){
+            bandera=true;
+            for(int j=0; j<dirigidosa.getTarget().size(); j++){
+                if(dirigidosa.getTarget().get(j).getIdDirigidoa().compareTo(DirigidoaCurso.get(i).getIdDirigidoa().getIdDirigidoa())==0)
+                    bandera=false;
+            }if (bandera==true)
+                ejbFacadeCursoDirigidoa.remove(DirigidoaCurso.get(i));
         }
+        
+        //Comprobamos los agregados
+        for(int i=0; i<dirigidosa.getTarget().size(); i++){
+            bandera=true;
+            for(int j=0; j<DirigidoaCurso.size(); j++){
+                if(dirigidosa.getTarget().get(i).getIdDirigidoa().compareTo(DirigidoaCurso.get(j).getIdDirigidoa().getIdDirigidoa())==0)
+                    bandera=false;
+            }if (bandera==true)
+                GuardarDirigidoaCurso(dirigidosa.getTarget().get(i));
+        }
+    }
+    public void GuardarDirigidoa(){
+        for(int i=0; i<dirigidosa.getTarget().size(); i++){
+            GuardarDirigidoaCurso(dirigidosa.getTarget().get(i));
+        }
+    }
+    
+    public void GuardarDetalle(){
+        detalleGuardar.setIdCurso(selected);
+        DetalleController detallecontrol=new DetalleController();
+        detallecontrol.create(detalleGuardar, ejbFacadeDetalle);
+        //ejbFacadeDetalle.create(detalleGuardar);
+    }
+    
+    public void GuardarDirigidoaCurso(DirigidoA dirigidoa){
+        CursoDirigidoa instanceCursoDirigidoa=new CursoDirigidoa();
+        instanceCursoDirigidoa.setIdCurso(selected);
+        instanceCursoDirigidoa.setIdDirigidoa(dirigidoa);
+        
+        CursoDirigidoaController cursoDirigidoa=new CursoDirigidoaController();
+        cursoDirigidoa.create(instanceCursoDirigidoa,ejbFacadeCursoDirigidoa);
+    }
+    
+    public void addDetalle(AjaxBehaviorEvent event){
+        int a =0;
+        int aa =0;
     }
 }

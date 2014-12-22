@@ -28,19 +28,43 @@ public class ModuloController implements Serializable {
     @EJB
     private edu.ucuenca.edcontinua.farcade.ModuloFacade ejbFacade;
     private List<Modulo> items = null;
+    private List<Modulo> itemsByCreate = new ArrayList<Modulo>();
     private Modulo selected;
     
     @EJB
     private edu.ucuenca.edcontinua.farcade.ModuloFacade ejbFacadeModulo;
-    
     private List<Modulo> itemsWhere = null;
-    private Modulo modulo;
+    
+    boolean visibleCurso=false;
 
     public ModuloController() {
     }
 
     public Modulo getSelected() {
+        if (selected==null){
+            selected = new Modulo();
+        initializeEmbeddableKey();
+        }
         return selected;
+    }
+    public List<Modulo> getItemsByCreate() {
+        //if(itemsByCreate!=null)
+             if (itemsByCreate==null){
+            itemsByCreate=new ArrayList<Modulo>();
+        }
+        return itemsByCreate;
+    }
+
+    public boolean isVisibleCurso() {
+        return visibleCurso;
+    }
+
+    public void setVisibleCurso(boolean visibleCurso) {
+        this.visibleCurso = visibleCurso;
+    }
+
+    public void setItemsByCreate(List<Modulo> itemsByCreate) {
+        this.itemsByCreate = itemsByCreate;
     }
 
     public void setSelected(Modulo selected) {
@@ -57,6 +81,13 @@ public class ModuloController implements Serializable {
         return ejbFacade;
     }
 
+    public Modulo prepareCreate(Curso curso) {
+        selected = new Modulo();
+        selected.setIdCurso(curso);
+        //itemsByCreate.add(selected);
+        this.visibleCurso=true;
+        return selected;
+    }
     public Modulo prepareCreate() {
         selected = new Modulo();
         initializeEmbeddableKey();

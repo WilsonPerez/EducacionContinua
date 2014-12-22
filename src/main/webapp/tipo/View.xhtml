@@ -10,6 +10,7 @@
 
         <p:dialog id="TipoViewDlg" widgetVar="TipoViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewTipoTitle}">
             <h:form id="TipoViewForm">
+                <div id="listaL">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{tipoController.selected != null}">
                         <h:outputText value="#{bundle.ViewTipoLabel_idTipo}"/>
@@ -19,6 +20,7 @@
                     </p:panelGrid>
                     <p:commandButton value="#{bundle.Close}" onclick="TipoViewDialog.hide()"/>
                 </h:panelGroup>
+                </div>
             </h:form>
         </p:dialog>
 

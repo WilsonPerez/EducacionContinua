@@ -10,19 +10,22 @@
 
         <p:dialog id="CursoViewDlg" widgetVar="CursoViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewCursoTitle}">
             <h:form id="CursoViewForm">
+                <div id="listaL">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{cursoController.selected != null}">
                         <h:outputText value="#{bundle.ViewCursoLabel_idCurso}"/>
                         <h:outputText value="#{cursoController.selected.idCurso}" title="#{bundle.ViewCursoTitle_idCurso}"/>
                         <h:outputText value="#{bundle.ViewCursoLabel_nombre}"/>
                         <h:outputText value="#{cursoController.selected.nombre}" title="#{bundle.ViewCursoTitle_nombre}"/>
-                        <h:outputText value="#{bundle.ViewCursoLabel_descripccion}"/>
-                        <h:outputText value="#{cursoController.selected.descripccion}" title="#{bundle.ViewCursoTitle_descripccion}"/>
                         <h:outputText value="#{bundle.ViewCursoLabel_idTipo}"/>
                         <h:outputText value="#{cursoController.selected.idTipo}" title="#{bundle.ViewCursoTitle_idTipo}"/>
+                        <h:outputText value="#{bundle.ViewCursoLabel_descripccion}"/>
+                        <img src="#{cursoController.selected.descripccion}" />                      
+                        
                     </p:panelGrid>
                     <p:commandButton value="#{bundle.Close}" onclick="CursoViewDialog.hide()"/>
                 </h:panelGroup>
+                </div>
             </h:form>
         </p:dialog>
 

@@ -6,28 +6,23 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
-    <ui:composition template="/template.xhtml">
-
-
-        <ui:define name="title">
-            <h:outputText value="#{bundle.ListCursoTitle}"></h:outputText>
-        </ui:define>
+    <ui:composition template="/layout/mainTemplate.xhtml">
 
         <ui:define name="body">
             <h:form id="CursoListForm">
-                <p:panel header="#{bundle.ListCursoTitle}">
+                <p:panel>
                     <p:dataTable id="datalist" value="#{cursoController.items}" var="item"
                                  selectionMode="single" selection="#{cursoController.selected}"
                                  paginator="true"
                                  rowKey="#{item.idCurso}"
-                                 rows="10"
+                                 rows="8"
                                  rowsPerPageTemplate="10,20,30,40,50"
                                  >
 
                         <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
                         <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
 
-                        <p:column>
+                        <p:column style="text-align: center">
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListCursoTitle_idCurso}"/>
                             </f:facet>
@@ -39,28 +34,24 @@
                             </f:facet>
                             <h:outputText value="#{item.nombre}"/>
                         </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListCursoTitle_descripccion}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.descripccion}"/>
-                        </p:column>
+                        
                         <p:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListCursoTitle_idTipo}"/>
                             </f:facet>
                             <h:outputText value="#{item.idTipo.nombre}"/>
                         </p:column>
-                        <p:column>
+                        <p:column style="text-align: center">
                             <f:facet name="header">
                                 <h:outputText value="Detalle"/>
                             </f:facet>
-                            <p:commandButton icon="ui-icon-search" value="#{bundle.View}" update="DetalleViewForm" 
+                            <p:commandButton icon="ui-icon-search" update="DetalleViewForm" 
                                 oncomplete="PF('DetalleViewDialog').show()" actionListener="#{detalleController.SetItemsWhere(cursoController.selected)}"/>
                             
-                            <p:dialog id="DetalleViewForm" widgetVar="DetalleViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewInstructorTitle}">
+                            <p:dialog id="DetalleViewForm" widgetVar="DetalleViewDialog" modal="true" resizable="false" appendTo="@(body)" 
+                                      width="80%" header="#{bundle.ViewInstructorTitle}">
                                 <h:form id="DetalleListForm">
-                                    <p:panel header="#{bundle.ListDetalleTitle}">
+                                    <div id="listaL">
                                         <p:dataTable id="datalist" value="#{detalleController.itemsWhere}" var="item"
                                                      selectionMode="single" selection="#{detalleController.selected}"
                                                      paginator="true"
@@ -77,6 +68,7 @@
                                             </p:column>
                                             <p:column>
                                                 <f:facet name="header">
+                                                    
                                                     <h:outputText value="#{bundle.ListDetalleTitle_objetivos}"/>
                                                 </f:facet>
                                                 <h:outputText value="#{item.objetivos}"/>
@@ -133,20 +125,24 @@
                                             </p:column>
 
                                         </p:dataTable>
-                                    </p:panel>
+                                    </div>
                                 </h:form>
                             </p:dialog>
+                                <p:commandButton id="createButton2" icon="ui-icon-plus"  
+                                             actionListener="#{detalleController.prepareCreate(cursoController.selected)}" 
+                                             update=":DetalleCreateForm" oncomplete="PF('DetalleCreateDialog').show()"/>                            
                         </p:column>
-                        <p:column>
+                        <p:column style="text-align: center">
                             <f:facet name="header">
                                 <h:outputText value="Dirigido a"/>
                             </f:facet>
-                            <p:commandButton icon="ui-icon-search" value="#{bundle.View}" update="DirigidoaViewForm" 
+                            <p:commandButton icon="ui-icon-search" update="DirigidoaViewForm" 
                                 oncomplete="PF('DirigidoaViewDialog').show()" actionListener="#{dirigidoAController.SetItemsWhere(cursoController.selected)}"/>
                             
-                            <p:dialog id="DirigidoaViewForm" widgetVar="DirigidoaViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewInstructorTitle}">
+                            <p:dialog id="DirigidoaViewForm" widgetVar="DirigidoaViewDialog" modal="true" resizable="false" appendTo="@(body)" 
+                                      width="80%" header="#{bundle.ViewInstructorTitle}">
                                 <h:form id="DirigidoAListForm">
-                                    <p:panel header="#{bundle.ListDirigidoATitle}">
+                                    <div id="listaL">
                                         <p:dataTable id="datalist" value="#{dirigidoAController.itemsWhere}" var="item"
                                                      selectionMode="single" selection="#{dirigidoAController.selected}"
                                                      paginator="true"
@@ -168,20 +164,21 @@
                                                 <h:outputText value="#{item.nombre}"/>
                                             </p:column>
                                         </p:dataTable>
-                                    </p:panel>
+                                    </div>
                                 </h:form>
                             </p:dialog>
                         </p:column>
-                        <p:column>
+                        <p:column style="text-align: center">
                             <f:facet name="header">
                                 <h:outputText value="Instructor"/>
                             </f:facet>
-                            <p:commandButton icon="ui-icon-search" value="#{bundle.View}" update="InstructorViewForm" 
+                            <p:commandButton icon="ui-icon-search" update="InstructorViewForm" 
                                 oncomplete="PF('InstructorViewDialog').show()" actionListener="#{instructorController.SetItemsWhere(cursoController.selected)}"/>
                             
-                            <p:dialog id="InstructorViewForm" widgetVar="InstructorViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewInstructorTitle}">
+                            <p:dialog id="InstructorViewForm" widgetVar="InstructorViewDialog" modal="true" resizable="true" 
+                                      appendTo="@(body)" header="#{bundle.ViewInstructorTitle}" width="80%">
                                 <h:form id="InstructorViewForm2">
-                                    <p:panel header="#{bundle.ListInstructorTitle}">
+                                    <div id="listaL">
                                         <p:dataTable id="datalist" value="#{instructorController.itemsWhere}" var="item"
                                                     selectionMode="single" selection="#{instructorController.selected}"
                                                     paginator="true"
@@ -227,62 +224,74 @@
                                                 <h:outputText value="#{item.tipo}"/>
                                             </p:column>
                                         </p:dataTable>
-                                    </p:panel>
+                                        </div>
                                 </h:form>
                             </p:dialog>
                         </p:column>
-                        <p:column>
+                        <p:column style="text-align: center">
                             <f:facet name="header">
                                 <h:outputText value="Módulos"/>
                             </f:facet>
-                            <p:commandButton icon="ui-icon-search" value="#{bundle.View}" update="ModuloViewForm" 
-                                oncomplete="PF('ModuloViewDialog').show()" actionListener="#{moduloController.SetItemsWhere(cursoController.selected)}"/>
+                            <!--<p:commandButton icon="ui-icon-search" update="ModuloViewForm" 
+                                oncomplete="PF('ModuloViewDialog').show()" actionListener="{moduloController.SetItemsWhere(cursoController.selected)}"/>
                             
-                            <p:dialog id="ModuloViewForm" widgetVar="ModuloViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewInstructorTitle}">
+                            <p:dialog id="ModuloViewForm" widgetVar="ModuloViewDialog" modal="true" resizable="false" appendTo="@(body)" 
+                                      width="80%" header="{bundle.ViewInstructorTitle}">
                                 <h:form id="ModuloListForm">
-                                    <p:panel header="#{bundle.ListModuloTitle}">
-                                        <p:dataTable id="datalist" value="#{moduloController.itemsWhere}" var="item"
-                                                     selectionMode="single" selection="#{moduloController.selected}"
+                                    <div id="listaL">
+                                        <p:dataTable id="datalist" value="{moduloController.itemsWhere}" var="item"
+                                                     selectionMode="single" selection="{moduloController.selected}"
                                                      paginator="true"
-                                                     rowKey="#{item.idModulo}"
+                                                     rowKey="{item.idModulo}"
                                                      rows="10"
                                                      rowsPerPageTemplate="10,20,30,40,50"
                                                      >
 
                                             <p:column>
                                                 <f:facet name="header">
-                                                    <h:outputText value="#{bundle.ListModuloTitle_idModulo}"/>
+                                                    <h:outputText value="{bundle.ListModuloTitle_idModulo}"/>
                                                 </f:facet>
-                                                <h:outputText value="#{item.idModulo}"/>
+                                                <h:outputText value="{item.idModulo}"/>
                                             </p:column>
                                             <p:column>
                                                 <f:facet name="header">
-                                                    <h:outputText value="#{bundle.ListModuloTitle_nombre}"/>
+                                                    <h:outputText value="{bundle.ListModuloTitle_nombre}"/>
                                                 </f:facet>
-                                                <h:outputText value="#{item.nombre}"/>
+                                                <h:outputText value="{item.nombre}"/>
                                             </p:column>
                                             <p:column>
                                                 <f:facet name="header">
-                                                    <h:outputText value="#{bundle.ListModuloTitle_descripcion}"/>
+                                                    <h:outputText value="{bundle.ListModuloTitle_descripcion}"/>
                                                 </f:facet>
-                                                <h:outputText value="#{item.descripcion}"/>
+                                                <h:outputText value="{item.descripcion}"/>
                                             </p:column>
                                             <p:column>
                                                 <f:facet name="header">
-                                                    <h:outputText value="#{bundle.ListModuloTitle_idCurso}"/>
+                                                    <h:outputText value="{bundle.ListModuloTitle_idCurso}"/>
                                                 </f:facet>
-                                                <h:outputText value="#{item.idCurso}"/>
+                                                <h:outputText value="{item.idCurso}"/>
                                             </p:column>
+                                                
                                         </p:dataTable>
-                                    </p:panel>
+                                    </div>
                                 </h:form>
-                            </p:dialog>
+                                    <p:commandButton id="deleteButton2" icon="ui-icon-trash"  value="{bundle.Delete}" actionListener="{moduloController.destroy()}" disabled="{empty moduloController.selected}"/>
+                       
+                            </p:dialog>-->
+                            <p:commandButton id="deleteButton3" icon="ui-icon-search" 
+                                             actionListener="#{moduloController.SetItemsWhere(cursoController.selected)}" update=":ModuloListForm" 
+                                             oncomplete="PF('ModuloListDialog').show()"/>
+                            <p:commandButton id="createButton3" icon="ui-icon-plus" 
+                                             actionListener="#{moduloController.prepareCreate(cursoController.selected)}" update=":ModuloCreateForm" 
+                                             oncomplete="PF('ModuloCreateDialog').show()"/>
+                            
+                            
                         </p:column>
                        
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{cursoController.prepareCreate}" update=":CursoCreateForm" oncomplete="PF('CursoCreateDialog').show()"/>
                             <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":CursoViewForm" oncomplete="PF('CursoViewDialog').show()" disabled="#{empty cursoController.selected}"/>
-                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":CursoEditForm" oncomplete="PF('CursoEditDialog').show()" disabled="#{empty cursoController.selected}"/>
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" actionListener="#{cursoController.editInstructor}" update=":CursoEditForm" oncomplete="PF('CursoEditDialog').show()" disabled="#{empty cursoController.selected}"/>
                             <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{cursoController.destroy}" update=":growl,datalist" disabled="#{empty cursoController.selected}"/>
                         </f:facet>
                     </p:dataTable>
@@ -292,6 +301,8 @@
             <ui:include src="Create.xhtml"/>
             <ui:include src="Edit.xhtml"/>
             <ui:include src="View.xhtml"/>
+            <ui:include src="../detalle/Create.xhtml"/>
+            <ui:include src="../modulo/ListDelete.xhtml"/>
         </ui:define>
     </ui:composition>
 

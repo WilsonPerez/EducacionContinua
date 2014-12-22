@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Universidad de Cuenca</title>
+        <h:outputStylesheet library="css" name="estilop.css"/>
+        
+        <h:outputStylesheet name="primecss.css" library="css"/>
+        <h:outputScript library="js" name="primecss.js" />
+        
+    </h:head>
+
+    <h:body class="bod">
+        <h:outputStylesheet library="css" name="estilop.css"  />
+        <!--style="background-color:red" -->
+        <h:panelGroup layout="block" >
+
+            <div class="wrapper">
+                <header class="header">
+                    <h:panelGrid columns="2"  >
+                        
+                        <img style="height:162px" src="http://www.ucuenca.edu.ec/images/cabeceras_facultades/dep_educacionContinua-14.png"/>
+                        
+                        <p:panel id="titulopagina" style="text-align: left; border: 0px;">
+                            Administración  <br /> de Cursos
+                        </p:panel>
+                    </h:panelGrid>
+                    <br/>
+                </header>
+                
+                 <!-- ============ MENU ============-->
+                 <h:form id="frmLeft" style="background-color: rgb(1, 54, 129)">
+
+                    <p:tabMenu style="margin-left: 10%; width: 80%">
+                        <p:menuitem value="Curso" outcome="/curso/List" style="font-size: 16px">
+                        </p:menuitem>
+                        
+                        <p:menuitem value="Detalles" outcome="/detalle/List" style="font-size: 16px">
+                        </p:menuitem>
+                        
+                        <p:menuitem value="Instructor" outcome="/instructor/List" style="font-size: 16px">
+                        </p:menuitem>
+                        
+                        <p:menuitem value="Modulos" outcome="/modulo/List" style="font-size: 16px">
+                        </p:menuitem>
+                        
+                        <p:menuitem value="Especialidades" outcome="/dirigidoA/List" style="font-size: 16px">
+                        </p:menuitem>
+                        
+                        <p:menuitem value="Tipos de Curso" outcome="/tipo/List" style="font-size: 16px">
+                        </p:menuitem>
+                    </p:tabMenu>      
+                </h:form>
+                 
+                <!-- ============ CONTENIDO ============-->
+                
+             
+                <div class="middle">
+                    <p:growl id="growl" life="3000" />
+                    <div class="container" id="lista">
+                        <ui:insert name="body">Content</ui:insert>
+                    </div>
+                </div>
+            </div>
+        </h:panelGroup>
+    </h:body>
+</html>

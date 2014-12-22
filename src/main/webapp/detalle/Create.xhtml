@@ -10,12 +10,11 @@
 
         <p:dialog id="DetalleCreateDlg" widgetVar="DetalleCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateDetalleTitle}">
             <h:form id="DetalleCreateForm">
+                <div id="listaL">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{detalleController.selected != null}">
-                        <p:outputLabel value="#{bundle.CreateDetalleLabel_idDetalle}" for="idDetalle" />
-                        <p:inputText id="idDetalle" value="#{detalleController.selected.idDetalle}" title="#{bundle.CreateDetalleTitle_idDetalle}" required="true" requiredMessage="#{bundle.CreateDetalleRequiredMessage_idDetalle}"/>
                         <p:outputLabel value="#{bundle.CreateDetalleLabel_objetivos}" for="objetivos" />
-                        <p:inputText id="objetivos" value="#{detalleController.selected.objetivos}" title="#{bundle.CreateDetalleTitle_objetivos}" required="true" requiredMessage="#{bundle.CreateDetalleRequiredMessage_objetivos}"/>
+                        <p:inputTextarea id="objetivos" value="#{detalleController.selected.objetivos}" title="#{bundle.CreateDetalleTitle_objetivos}" required="true" requiredMessage="#{bundle.CreateDetalleRequiredMessage_objetivos}" maxlength="200" rows="1" style="width: 98%; height: 90px" />
                         <p:outputLabel value="#{bundle.CreateDetalleLabel_fechaInscripcion}" for="fechaInscripcion" />
                         <p:calendar id="fechaInscripcion" pattern="MM/dd/yyyy" value="#{detalleController.selected.fechaInscripcion}" title="#{bundle.EditDetalleTitle_fechaInscripcion}" required="true" requiredMessage="#{bundle.EditDetalleRequiredMessage_fechaInscripcion}" showOn="button"/>
                         <p:outputLabel value="#{bundle.CreateDetalleLabel_numHoras}" for="numHoras" />
@@ -29,17 +28,18 @@
                         <p:outputLabel value="#{bundle.CreateDetalleLabel_precio}" for="precio" />
                         <p:inputText id="precio" value="#{detalleController.selected.precio}" title="#{bundle.CreateDetalleTitle_precio}" />
                         <p:outputLabel value="#{bundle.CreateDetalleLabel_numCupos}" for="numCupos" />
-                        <p:inputText id="numCupos" value="#{detalleController.selected.numCupos}" title="#{bundle.CreateDetalleTitle_numCupos}" />
+                        <p:inputText id="numCupos" value="#{detalleController.selected.numCupos}" title="#{bundle.CreateDetalleTitle_numCupos}"/>
                         <p:outputLabel value="#{bundle.CreateDetalleLabel_idCurso}" for="idCurso" />
-                        <p:selectOneMenu id="idCurso" value="#{detalleController.selected.idCurso}" >
+                        <p:selectOneMenu id="idCurso" value="#{detalleController.selected.idCurso}" disabled="#{detalleController.visibleCurso}">
                             <f:selectItems value="#{cursoController.itemsAvailableSelectOne}"
                                            var="idCursoItem"
-                                           itemValue="#{idCursoItem}"/>
+                                           itemValue="#{idCursoItem}" />
                         </p:selectOneMenu>
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{detalleController.create}" value="#{bundle.Save}" update="display,:DetalleListForm:datalist,:growl" oncomplete="handleSubmit(args,'DetalleCreateDialog');"/>
+                    <p:commandButton actionListener="#{detalleController.create}" value="#{bundle.Save}" oncomplete="PF('DetalleCreateDialog').hide();" />
                     <p:commandButton value="#{bundle.Cancel}" onclick="DetalleCreateDialog.hide()"/>
                 </h:panelGroup>
+                </div>
             </h:form>
         </p:dialog>
 

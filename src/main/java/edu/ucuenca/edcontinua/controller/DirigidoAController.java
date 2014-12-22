@@ -106,10 +106,22 @@ public class DirigidoAController implements Serializable {
         if (selected != null) {
             setEmbeddableKeys();
             try {
-                if (persistAction != PersistAction.DELETE) {
-                    getFacade().edit(selected);
-                } else {
+                if (persistAction == PersistAction.CREATE) {
+                    int count = ejbFacade.count();
+                    double floor = Math.floor(Math.random()*(999-10+1)+10);
+                    
+                    String [] abecedario = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", 
+                    "K", "L", "M","N","O","P","Q","R","S","T","U","V","W", "X","Y","Z" };
+
+                    int numRandon = (int) Math.round(Math.random() * 26 ) ;
+                    floor=floor*count;
+                    
+                    selected.setIdDirigidoa(floor+abecedario[numRandon]+abecedario[numRandon]);
+                    getFacade().create(selected);
+                }if (persistAction == PersistAction.DELETE){
                     getFacade().remove(selected);
+                }if (persistAction == PersistAction.UPDATE){
+                    getFacade().edit(selected);
                 }
                 JsfUtil.addSuccessMessage(successMessage);
             } catch (EJBException ex) {

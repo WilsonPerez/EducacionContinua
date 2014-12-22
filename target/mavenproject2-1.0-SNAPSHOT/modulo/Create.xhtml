@@ -10,6 +10,7 @@
 
         <p:dialog id="ModuloCreateDlg" widgetVar="ModuloCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateModuloTitle}">
             <h:form id="ModuloCreateForm">
+                <div id="listaL">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{moduloController.selected != null}">
                         <p:outputLabel value="#{bundle.CreateModuloLabel_idModulo}" for="idModulo" />
@@ -19,15 +20,17 @@
                         <p:outputLabel value="#{bundle.CreateModuloLabel_descripcion}" for="descripcion" />
                         <p:inputText id="descripcion" value="#{moduloController.selected.descripcion}" title="#{bundle.CreateModuloTitle_descripcion}" />
                         <p:outputLabel value="#{bundle.CreateModuloLabel_idCurso}" for="idCurso" />
-                        <p:selectOneMenu id="idCurso" value="#{moduloController.selected.idCurso}" >
+                        <p:selectOneMenu id="idCurso" value="#{moduloController.selected.idCurso}" disabled="#{detalleController.visibleCurso}" >
                             <f:selectItems value="#{cursoController.itemsAvailableSelectOne}"
                                            var="idCursoItem"
                                            itemValue="#{idCursoItem}"/>
                         </p:selectOneMenu>
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{moduloController.create}" value="#{bundle.Save}" update="display,:ModuloListForm:datalist,:growl" oncomplete="handleSubmit(args,'ModuloCreateDialog');"/>
+                     <!--update="display,:ModuloListForm:datalist,:growl"--> 
+                    <p:commandButton actionListener="#{moduloController.create}" value="#{bundle.Save}" oncomplete="PF('ModuloCreateDialog').hide();" update="display,:ModuloListForm:datalist,:growl"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="ModuloCreateDialog.hide()"/>
                 </h:panelGroup>
+                </div>
             </h:form>
         </p:dialog>
 

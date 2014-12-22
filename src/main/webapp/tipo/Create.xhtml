@@ -10,16 +10,16 @@
 
         <p:dialog id="TipoCreateDlg" widgetVar="TipoCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateTipoTitle}">
             <h:form id="TipoCreateForm">
+                <div id="listaL">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{tipoController.selected != null}">
-                        <p:outputLabel value="#{bundle.CreateTipoLabel_idTipo}" for="idTipo" />
-                        <p:inputText id="idTipo" value="#{tipoController.selected.idTipo}" title="#{bundle.CreateTipoTitle_idTipo}" required="true" requiredMessage="#{bundle.CreateTipoRequiredMessage_idTipo}"/>
                         <p:outputLabel value="#{bundle.CreateTipoLabel_nombre}" for="nombre" />
                         <p:inputText id="nombre" value="#{tipoController.selected.nombre}" title="#{bundle.CreateTipoTitle_nombre}" />
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{tipoController.create}" value="#{bundle.Save}" update="display,:TipoListForm:datalist,:growl" oncomplete="handleSubmit(args,'TipoCreateDialog');"/>
+                    <p:commandButton actionListener="#{tipoController.create}" value="#{bundle.Save}" update="display,:TipoListForm:datalist,:growl" oncomplete="PF('TipoCreateDialog').hide();"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="TipoCreateDialog.hide()"/>
                 </h:panelGroup>
+                </div>
             </h:form>
         </p:dialog>
 

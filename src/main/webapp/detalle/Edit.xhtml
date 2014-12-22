@@ -10,12 +10,13 @@
 
         <p:dialog id="DetalleEditDlg" widgetVar="DetalleEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditDetalleTitle}">
             <h:form id="DetalleEditForm">
+                <div id="listaL">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{detalleController.selected != null}">
                         <p:outputLabel value="#{bundle.EditDetalleLabel_idDetalle}" for="idDetalle" />
-                        <p:inputText id="idDetalle" value="#{detalleController.selected.idDetalle}" title="#{bundle.EditDetalleTitle_idDetalle}" required="true" requiredMessage="#{bundle.EditDetalleRequiredMessage_idDetalle}"/>
+                        <p:inputText id="idDetalle" value="#{detalleController.selected.idDetalle}" title="#{bundle.EditDetalleTitle_idDetalle}" disabled="true"/>
                         <p:outputLabel value="#{bundle.EditDetalleLabel_objetivos}" for="objetivos" />
-                        <p:inputText id="objetivos" value="#{detalleController.selected.objetivos}" title="#{bundle.EditDetalleTitle_objetivos}" required="true" requiredMessage="#{bundle.EditDetalleRequiredMessage_objetivos}"/>
+                        <p:inputTextarea id="objetivos" value="#{detalleController.selected.objetivos}" title="#{bundle.EditDetalleTitle_objetivos}" required="true" requiredMessage="#{bundle.EditDetalleRequiredMessage_objetivos}" maxlength="200" rows="1" style="width: 98%; height: 90px"/>
                         <p:outputLabel value="#{bundle.EditDetalleLabel_fechaInscripcion}" for="fechaInscripcion" />
                         <p:calendar id="fechaInscripcion" pattern="MM/dd/yyyy" value="#{detalleController.selected.fechaInscripcion}" title="#{bundle.EditDetalleTitle_fechaInscripcion}" required="true" requiredMessage="#{bundle.EditDetalleRequiredMessage_fechaInscripcion}" showOn="button"/>
                         <p:outputLabel value="#{bundle.EditDetalleLabel_numHoras}" for="numHoras" />
@@ -38,9 +39,10 @@
                                            itemValue="#{idCursoItem}"/>
                         </p:selectOneMenu>
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{detalleController.update}" value="#{bundle.Save}" update="display,:DetalleListForm:datalist,:growl" oncomplete="handleSubmit(args, 'DetalleEditDialog');"/>
+                    <p:commandButton actionListener="#{detalleController.update}" value="#{bundle.Save}" update="display,:DetalleListForm:datalist,:growl" oncomplete="PF('DetalleEditDialog').hide();"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="DetalleEditDialog.hide()"/>
                 </h:panelGroup>
+                </div>
             </h:form>
         </p:dialog>
 

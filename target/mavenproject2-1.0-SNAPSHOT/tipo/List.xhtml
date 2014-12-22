@@ -6,7 +6,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
-    <ui:composition template="/template.xhtml">
+    <ui:composition template="/layout/mainTemplate.xhtml">
 
 
         <ui:define name="title">
@@ -15,7 +15,7 @@
 
         <ui:define name="body">
             <h:form id="TipoListForm">
-                <p:panel header="#{bundle.ListTipoTitle}">
+                <p:panel >
                     <p:dataTable id="datalist" value="#{tipoController.items}" var="item"
                                  selectionMode="single" selection="#{tipoController.selected}"
                                  paginator="true"

@@ -1,0 +1,60 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Oct 20, 2014, 9:37:34 AM
+    Author     : wilson
+*/
+
+.parrafo{
+    font-size: 14px;
+    margin-left: 3%;
+    margin-right: 4%; 
+    text-align: justify;
+}
+
+#contenido{
+    background-color: rgb(223, 228, 230);
+}
+body {   
+    background-color:white;
+    //background-color: rgb(188, 199, 207);
+    //font-family: Arial,Helvetica,sans-serif;
+}
+#titulopagina {
+    font-family: Tahoma, Arial;
+    font-size: 27px;
+    text-transform:uppercase;
+    color: lightgray;
+    font-weight: bold;
+    margin-left: auto;
+    margin-right: auto;    
+    width: 600px;
+}
+.header {
+    height: 165px;
+    background-image: url("http://www.ucuenca.edu.ec/templates/tmp_alter2/images/iconos/fondobanner-03.png");
+    margin-left: 10%; 
+    width: 80%; 
+}
+.ui-grid {
+    margin-bottom: 10px;
+}
+
+.ui-grid .ui-grid-row div {
+    text-align: center;
+    border: 1px solid #dddddd;
+    
+}
+#lista {
+  font-family: Arial,Helvetica,sans-serif; 
+  font-size: 12px;
+  margin-left: 10%; 
+  width: 80%;
+}
+#listaL {
+  font-family: Arial,Helvetica,sans-serif; 
+  font-size: 13px;
+}

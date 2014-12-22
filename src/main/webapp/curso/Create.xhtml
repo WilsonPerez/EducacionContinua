@@ -10,6 +10,7 @@
 
         <p:dialog id="CursoCreateDlg" widgetVar="CursoCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateCursoTitle}">
             <h:form id="CursoCreateForm">
+                <div id="listaL">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{cursoController.selected != null}">
                         <p:outputLabel value="#{bundle.CreateCursoLabel_idCurso}" for="idCurso" />
@@ -17,7 +18,7 @@
                         <p:outputLabel value="#{bundle.CreateCursoLabel_nombre}" for="nombre" />
                         <p:inputText id="nombre" value="#{cursoController.selected.nombre}" title="#{bundle.CreateCursoTitle_nombre}" required="true" requiredMessage="#{bundle.CreateCursoRequiredMessage_nombre}"/>
                         <p:outputLabel value="#{bundle.CreateCursoLabel_descripccion}" for="descripccion" />
-                        <p:inputText id="descripccion" value="#{cursoController.selected.descripccion}" title="#{bundle.CreateCursoTitle_descripccion}" />
+                        <p:inputText id="descripccion" value="#{cursoController.selected.descripccion}" title="#{bundle.CreateCursoTitle_descripccion}" style="width: 98%"/>
                         <p:outputLabel value="#{bundle.CreateCursoLabel_idTipo}" for="idTipo" />
                         <p:selectOneMenu id="idTipo" value="#{cursoController.selected.idTipo}" >
                             <f:selectItems value="#{tipoController.itemsAvailableSelectOne}"
@@ -25,12 +26,36 @@
                                            itemValue="#{idTipoItem}"/>
                         </p:selectOneMenu>
                     </p:panelGrid>
-                                        <p:tabView>
-                        <p:tab>
+                        <p:tabView>
+                            <p:tab title="Detalle">
+                                <h:form id="DetalleCreateForm">
+                                    <h:panelGroup id="display">
+                                        <p:panelGrid columns="2" rendered="#{detalleController.selected != null}">
+                                            <p:outputLabel value="#{bundle.CreateDetalleLabel_objetivos}" for="objetivos" />
+                                            <p:inputTextarea id="objetivos" value="#{detalleController.selected.objetivos}" title="#{bundle.CreateDetalleTitle_objetivos}" required="true" requiredMessage="#{bundle.CreateDetalleRequiredMessage_objetivos}" maxlength="200" rows="1" style="width: 98%; height: 70px" />
+                                            <p:outputLabel value="#{bundle.CreateDetalleLabel_fechaInscripcion}" for="fechaInscripcion" />
+                                            <p:calendar id="fechaInscripcion" pattern="MM/dd/yyyy" value="#{detalleController.selected.fechaInscripcion}" title="#{bundle.EditDetalleTitle_fechaInscripcion}" required="true" requiredMessage="#{bundle.EditDetalleRequiredMessage_fechaInscripcion}" showOn="button"/>
+                                            <p:outputLabel value="#{bundle.CreateDetalleLabel_numHoras}" for="numHoras" />
+                                            <p:inputText id="numHoras" value="#{detalleController.selected.numHoras}" title="#{bundle.CreateDetalleTitle_numHoras}" />
+                                            <p:outputLabel value="#{bundle.CreateDetalleLabel_lugarInscripcion}" for="lugarInscripcion" />
+                                            <p:inputText id="lugarInscripcion" value="#{detalleController.selected.lugarInscripcion}" title="#{bundle.CreateDetalleTitle_lugarInscripcion}" />
+                                            <p:outputLabel value="#{bundle.CreateDetalleLabel_direccionCurso}" for="direccionCurso" />
+                                            <p:inputText id="direccionCurso" value="#{detalleController.selected.direccionCurso}" title="#{bundle.CreateDetalleTitle_direccionCurso}" />
+                                            <p:outputLabel value="#{bundle.CreateDetalleLabel_numTelefono}" for="numTelefono" />
+                                            <p:inputText id="numTelefono" value="#{detalleController.selected.numTelefono}" title="#{bundle.CreateDetalleTitle_numTelefono}" />
+                                            <p:outputLabel value="#{bundle.CreateDetalleLabel_precio}" for="precio" />
+                                            <p:inputText id="precio" value="#{detalleController.selected.precio}" title="#{bundle.CreateDetalleTitle_precio}" />
+                                            <p:outputLabel value="#{bundle.CreateDetalleLabel_numCupos}" for="numCupos" />
+                                            <p:inputText id="numCupos" value="#{detalleController.selected.numCupos}" title="#{bundle.CreateDetalleTitle_numCupos}" />
+                                            
+                                        </p:panelGrid>
+                                    </h:panelGroup>
+                                </h:form>
+                            </p:tab>
+                            <p:tab title="Dirigido A">
                             <h:form>
                                 <p:growl id="msg" showDetail="true" escape="false" />
 
-                                <h3>Dirigido A:</h3>
                                 <p:pickList id="pojoPickList" value="#{cursoController.dirigidosa}" var="theme" effect="bounce"
                                             itemValue="#{theme}" converter="dirigidoaConverter"
                                                 showSourceControls="true" showTargetControls="true" showCheckbox="true"
@@ -67,11 +92,10 @@
                                 </p:dialog>
                             </h:form>
                         </p:tab>
-                        <p:tab>
+                        <p:tab title="Instructor">
                             <h:form>
                                 <p:growl id="msg" showDetail="true" escape="false" />
 
-                                <h3>Instructor:</h3>
                                 <p:pickList id="pojoPickList" value="#{cursoController.instructores}" var="theme" effect="bounce"
                                             itemValue="#{theme}" converter="instructorConverter"
                                                 showSourceControls="true" showTargetControls="true" showCheckbox="true"
@@ -108,13 +132,55 @@
                                 </p:dialog>
                             </h:form>
                         </p:tab>
-                       
+                        <!--<p:tab title="Módulo">
+                            <h:form id="ModuloListForm">
+                <p:panel header="#{bundle.ListModuloTitle}">
+                    <p:dataTable id="datalist" value="#{moduloController.itemsByCreate}" var="item"
+                                 selectionMode="single" selection="#{moduloController.selected}"
+                                 paginator="true"
+                                 rowKey="#{item.idModulo}"
+                                 rows="10"
+                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 >
+
+                       <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListModuloTitle_idModulo}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idModulo}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListModuloTitle_nombre}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.nombre}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListModuloTitle_descripcion}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.descripcion}"/>
+                        </p:column>
+                        <f:facet name="footer">
+                            <a href="./instructor/List.xhtml" target="_blank"> Nuevo</a>
+                              
+                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" 
+                                             actionListener="#{moduloController.prepareCreate(cursoController.selected)}" update=":ModuloCreateForm" 
+                                             oncomplete="PF('ModuloCreateDialog').show()"/>
+                            
+                            
+                        </f:facet>
+                    </p:dataTable>
+                </p:panel>
+            </h:form>
+                        </p:tab>-->
                     </p:tabView>
-                    <p:commandButton actionListener="#{cursoController.create}" value="#{bundle.Save}" update="display,:CursoListForm:datalist,:growl" oncomplete="handleSubmit(args,'CursoCreateDialog');"/>
+                    <p:commandButton actionListener="#{cursoController.create(detalleController.selected)}" value="#{bundle.Save}" update="display,:CursoListForm:datalist,:growl" oncomplete="handleSubmit(args,'CursoCreateDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="CursoCreateDialog.hide()"/>
                 </h:panelGroup>
+                    </div>
             </h:form>
         </p:dialog>
-
+        <ui:include src="../modulo/Create.xhtml"/>
     </ui:composition>
 </html>

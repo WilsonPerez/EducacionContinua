@@ -10,6 +10,7 @@
 
         <p:dialog id="DirigidoAViewDlg" widgetVar="DirigidoAViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewDirigidoATitle}">
             <h:form id="DirigidoAViewForm">
+                <div id="listaL">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{dirigidoAController.selected != null}">
                         <h:outputText value="#{bundle.ViewDirigidoALabel_idDirigidoa}"/>
@@ -19,6 +20,7 @@
                     </p:panelGrid>
                     <p:commandButton value="#{bundle.Close}" onclick="DirigidoAViewDialog.hide()"/>
                 </h:panelGroup>
+                </div>
             </h:form>
         </p:dialog>
 

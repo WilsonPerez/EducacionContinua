@@ -10,16 +10,18 @@
 
         <p:dialog id="DirigidoAEditDlg" widgetVar="DirigidoAEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditDirigidoATitle}">
             <h:form id="DirigidoAEditForm">
+                <div id="listaL">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{dirigidoAController.selected != null}">
                         <p:outputLabel value="#{bundle.EditDirigidoALabel_idDirigidoa}" for="idDirigidoa" />
-                        <p:inputText id="idDirigidoa" value="#{dirigidoAController.selected.idDirigidoa}" title="#{bundle.EditDirigidoATitle_idDirigidoa}" required="true" requiredMessage="#{bundle.EditDirigidoARequiredMessage_idDirigidoa}"/>
+                        <p:inputText id="idDirigidoa" value="#{dirigidoAController.selected.idDirigidoa}" title="#{bundle.EditDirigidoATitle_idDirigidoa}" disabled="true"/>
                         <p:outputLabel value="#{bundle.EditDirigidoALabel_nombre}" for="nombre" />
                         <p:inputText id="nombre" value="#{dirigidoAController.selected.nombre}" title="#{bundle.EditDirigidoATitle_nombre}" />
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{dirigidoAController.update}" value="#{bundle.Save}" update="display,:DirigidoAListForm:datalist,:growl" oncomplete="handleSubmit(args, 'DirigidoAEditDialog');"/>
+                    <p:commandButton actionListener="#{dirigidoAController.update}" value="#{bundle.Save}" update="display,:DirigidoAListForm:datalist,:growl" oncomplete="PF('DirigidoAEditDialog').hide();"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="DirigidoAEditDialog.hide()"/>
                 </h:panelGroup>
+                </div>
             </h:form>
         </p:dialog>
 

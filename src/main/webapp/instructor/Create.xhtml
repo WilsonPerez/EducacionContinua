@@ -10,6 +10,7 @@
 
         <p:dialog id="InstructorCreateDlg" widgetVar="InstructorCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateInstructorTitle}">
             <h:form id="InstructorCreateForm">
+                <div id="listaL">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{instructorController.selected != null}">
                         <p:outputLabel value="#{bundle.CreateInstructorLabel_ci}" for="ci" />
@@ -25,9 +26,10 @@
                         <p:outputLabel value="#{bundle.CreateInstructorLabel_tipo}" for="tipo" />
                         <p:inputText id="tipo" value="#{instructorController.selected.tipo}" title="#{bundle.CreateInstructorTitle_tipo}" />
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{instructorController.create}" value="#{bundle.Save}" update="display,:InstructorListForm:datalist,:growl" oncomplete="handleSubmit(args,'InstructorCreateDialog');"/>
+                    <p:commandButton actionListener="#{instructorController.create}" value="#{bundle.Save}" update="display,:InstructorListForm:datalist,:growl" oncomplete="PF('InstructorCreateDialog').hide();"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="InstructorCreateDialog.hide()"/>
                 </h:panelGroup>
+                </div>
             </h:form>
         </p:dialog>
 

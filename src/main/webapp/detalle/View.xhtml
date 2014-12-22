@@ -10,12 +10,14 @@
 
         <p:dialog id="DetalleViewDlg" widgetVar="DetalleViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewDetalleTitle}">
             <h:form id="DetalleViewForm">
+                <div id="listaL">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{detalleController.selected != null}">
                         <h:outputText value="#{bundle.ViewDetalleLabel_idDetalle}"/>
                         <h:outputText value="#{detalleController.selected.idDetalle}" title="#{bundle.ViewDetalleTitle_idDetalle}"/>
                         <h:outputText value="#{bundle.ViewDetalleLabel_objetivos}"/>
-                        <h:outputText value="#{detalleController.selected.objetivos}" title="#{bundle.ViewDetalleTitle_objetivos}"/>
+                        <h:inputTextarea rows="1" style="width: 98%; height: 90px" value="#{detalleController.selected.objetivos}" disabled="true"/>
+                        
                         <h:outputText value="#{bundle.ViewDetalleLabel_fechaInscripcion}"/>
                         <h:outputText value="#{detalleController.selected.fechaInscripcion}" title="#{bundle.ViewDetalleTitle_fechaInscripcion}">
                             <f:convertDateTime pattern="MM/dd/yyyy" />
@@ -37,6 +39,7 @@
                     </p:panelGrid>
                     <p:commandButton value="#{bundle.Close}" onclick="DetalleViewDialog.hide()"/>
                 </h:panelGroup>
+                </div>
             </h:form>
         </p:dialog>
 

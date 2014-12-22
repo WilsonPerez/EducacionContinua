@@ -10,10 +10,11 @@
 
         <p:dialog id="InstructorEditDlg" widgetVar="InstructorEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditInstructorTitle}">
             <h:form id="InstructorEditForm">
+                <div id="listaL">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{instructorController.selected != null}">
                         <p:outputLabel value="#{bundle.EditInstructorLabel_ci}" for="ci" />
-                        <p:inputText id="ci" value="#{instructorController.selected.ci}" title="#{bundle.EditInstructorTitle_ci}" required="true" requiredMessage="#{bundle.EditInstructorRequiredMessage_ci}"/>
+                        <p:inputText id="ci" value="#{instructorController.selected.ci}" title="#{bundle.EditInstructorTitle_ci}" disabled="true"/>
                         <p:outputLabel value="#{bundle.EditInstructorLabel_nombre}" for="nombre" />
                         <p:inputText id="nombre" value="#{instructorController.selected.nombre}" title="#{bundle.EditInstructorTitle_nombre}" required="true" requiredMessage="#{bundle.EditInstructorRequiredMessage_nombre}"/>
                         <p:outputLabel value="#{bundle.EditInstructorLabel_apellido}" for="apellido" />
@@ -25,9 +26,10 @@
                         <p:outputLabel value="#{bundle.EditInstructorLabel_tipo}" for="tipo" />
                         <p:inputText id="tipo" value="#{instructorController.selected.tipo}" title="#{bundle.EditInstructorTitle_tipo}" />
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{instructorController.update}" value="#{bundle.Save}" update="display,:InstructorListForm:datalist,:growl" oncomplete="handleSubmit(args, 'InstructorEditDialog');"/>
+                    <p:commandButton actionListener="#{instructorController.update}" value="#{bundle.Save}" update="display,:InstructorListForm:datalist,:growl" oncomplete="PF('InstructorEditDialog').hide();"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="InstructorEditDialog.hide()"/>
                 </h:panelGroup>
+                </div>
             </h:form>
         </p:dialog>
 

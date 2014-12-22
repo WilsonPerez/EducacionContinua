@@ -10,6 +10,7 @@
 
         <p:dialog id="InstructorViewDlg" widgetVar="InstructorViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewInstructorTitle}">
             <h:form id="InstructorViewForm">
+                <div id="listaL">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{instructorController.selected != null}">
                         <h:outputText value="#{bundle.ViewInstructorLabel_ci}"/>
@@ -27,6 +28,7 @@
                     </p:panelGrid>
                     <p:commandButton value="#{bundle.Close}" onclick="InstructorViewDialog.hide()"/>
                 </h:panelGroup>
+                </div>
             </h:form>
         </p:dialog>
 

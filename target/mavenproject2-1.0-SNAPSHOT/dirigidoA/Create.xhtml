@@ -10,16 +10,16 @@
 
         <p:dialog id="DirigidoACreateDlg" widgetVar="DirigidoACreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateDirigidoATitle}">
             <h:form id="DirigidoACreateForm">
+                <div id="listaL">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{dirigidoAController.selected != null}">
-                        <p:outputLabel value="#{bundle.CreateDirigidoALabel_idDirigidoa}" for="idDirigidoa" />
-                        <p:inputText id="idDirigidoa" value="#{dirigidoAController.selected.idDirigidoa}" title="#{bundle.CreateDirigidoATitle_idDirigidoa}" required="true" requiredMessage="#{bundle.CreateDirigidoARequiredMessage_idDirigidoa}"/>
                         <p:outputLabel value="#{bundle.CreateDirigidoALabel_nombre}" for="nombre" />
                         <p:inputText id="nombre" value="#{dirigidoAController.selected.nombre}" title="#{bundle.CreateDirigidoATitle_nombre}" />
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{dirigidoAController.create}" value="#{bundle.Save}" update="display,:DirigidoAListForm:datalist,:growl" oncomplete="handleSubmit(args,'DirigidoACreateDialog');"/>
+                    <p:commandButton actionListener="#{dirigidoAController.create}" value="#{bundle.Save}" update="display,:DirigidoAListForm:datalist,:growl" oncomplete="PF('DirigidoACreateDialog').hide();"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="DirigidoACreateDialog.hide()"/>
                 </h:panelGroup>
+                </div>
             </h:form>
         </p:dialog>
 
