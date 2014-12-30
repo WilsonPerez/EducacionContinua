@@ -45,39 +45,46 @@
                             <f:facet name="header">
                                 <h:outputText value="Detalle"/>
                             </f:facet>
-                            <p:commandButton icon="ui-icon-search" update="DetalleViewForm" 
-                                oncomplete="PF('DetalleViewDialog').show()" actionListener="#{detalleController.SetItemsWhere(cursoController.selected)}"/>
+                            <p:commandButton id="createButton2" icon="ui-icon-plus"  
+                                             actionListener="#{detalleController.prepareCreate(cursoController.selected)}" 
+                                             update=":DetalleCreateForm" oncomplete="PF('DetalleCreateDialog').show()"/> 
+                                
+                                <p:commandButton id="deleteButton4" icon="ui-icon-search" 
+                                             actionListener="#{detalleController.SetItemsWhere(cursoController.selected)}" update=":DetalleListForm" 
+                                             oncomplete="PF('DetalleListDialog').show()"/>
+                             <!--<p:commandButton icon="ui-icon-search" update="DetalleViewForm" 
+                                oncomplete="PF('DetalleViewDialog').show()" actionListener="{detalleController.SetItemsWhere(cursoController.selected)}"/>
                             
-                            <p:dialog id="DetalleViewForm" widgetVar="DetalleViewDialog" modal="true" resizable="false" appendTo="@(body)" 
-                                      width="80%" header="#{bundle.ViewInstructorTitle}">
+                           <p:dialog id="DetalleViewForm" widgetVar="DetalleViewDialog" modal="true" resizable="false" appendTo="@(body)" 
+                                      width="80%" header="{bundle.ViewInstructorTitle}">
                                 <h:form id="DetalleListForm">
                                     <div id="listaL">
-                                        <p:dataTable id="datalist" value="#{detalleController.itemsWhere}" var="item"
-                                                     selectionMode="single" selection="#{detalleController.selected}"
+                                        <p:dataTable id="datalist" value="{detalleController.itemsWhere}" var="item"
+                                                     selectionMode="single" selection="{detalleController.selected}"
                                                      paginator="true"
-                                                     rowKey="#{item.idDetalle}"
+                                                     rowKey="{item.idDetalle}"
                                                      rows="10"
                                                      rowsPerPageTemplate="10,20,30,40,50"
                                                      >
 
                                             <p:column>
                                                 <f:facet name="header">
-                                                    <h:outputText value="#{bundle.ListDetalleTitle_idDetalle}"/>
+                                                    <h:outputText value="{bundle.ListDetalleTitle_idDetalle}"/>
                                                 </f:facet>
-                                                <h:outputText value="#{item.idDetalle}"/>
+                                                <h:outputText value="{item.idDetalle}"/>
                                             </p:column>
                                             <p:column>
                                                 <f:facet name="header">
                                                     
                                                     <h:outputText value="#{bundle.ListDetalleTitle_objetivos}"/>
                                                 </f:facet>
-                                                <h:outputText value="#{item.objetivos}"/>
+                                                <h:outputText value="{item.objetivos}"/>
                                             </p:column>
                                             <p:column>
                                                 <f:facet name="header">
                                                     <h:outputText value="#{bundle.ListDetalleTitle_fechaInscripcion}"/>
                                                 </f:facet>
-                                                <h:outputText value="#{item.fechaInscripcion}">
+                                                <h:outputText value="{item.fechaInscripcion}">
                                                     <f:convertDateTime pattern="MM/dd/yyyy" />
                                                 </h:outputText>
                                             </p:column>
@@ -85,52 +92,51 @@
                                                 <f:facet name="header">
                                                     <h:outputText value="#{bundle.ListDetalleTitle_numHoras}"/>
                                                 </f:facet>
-                                                <h:outputText value="#{item.numHoras}"/>
+                                                <h:outputText value="{item.numHoras}"/>
                                             </p:column>
                                             <p:column>
                                                 <f:facet name="header">
                                                     <h:outputText value="#{bundle.ListDetalleTitle_lugarInscripcion}"/>
                                                 </f:facet>
-                                                <h:outputText value="#{item.lugarInscripcion}"/>
+                                                <h:outputText value="{item.lugarInscripcion}"/>
                                             </p:column>
                                             <p:column>
                                                 <f:facet name="header">
                                                     <h:outputText value="#{bundle.ListDetalleTitle_direccionCurso}"/>
                                                 </f:facet>
-                                                <h:outputText value="#{item.direccionCurso}"/>
+                                                <h:outputText value="{item.direccionCurso}"/>
                                             </p:column>
                                             <p:column>
                                                 <f:facet name="header">
                                                     <h:outputText value="#{bundle.ListDetalleTitle_numTelefono}"/>
                                                 </f:facet>
-                                                <h:outputText value="#{item.numTelefono}"/>
+                                                <h:outputText value="{item.numTelefono}"/>
                                             </p:column>
                                             <p:column>
                                                 <f:facet name="header">
                                                     <h:outputText value="#{bundle.ListDetalleTitle_precio}"/>
                                                 </f:facet>
-                                                <h:outputText value="#{item.precio}"/>
+                                                <h:outputText value="{item.precio}"/>
                                             </p:column>
                                             <p:column>
                                                 <f:facet name="header">
                                                     <h:outputText value="#{bundle.ListDetalleTitle_numCupos}"/>
                                                 </f:facet>
-                                                <h:outputText value="#{item.numCupos}"/>
+                                                <h:outputText value="{item.numCupos}"/>
                                             </p:column>
                                             <p:column>
                                                 <f:facet name="header">
                                                     <h:outputText value="#{bundle.ListDetalleTitle_idCurso}"/>
                                                 </f:facet>
-                                                <h:outputText value="#{item.idCurso}"/>
+                                                <h:outputText value="{item.idCurso}"/>
                                             </p:column>
 
                                         </p:dataTable>
                                     </div>
                                 </h:form>
-                            </p:dialog>
-                                <p:commandButton id="createButton2" icon="ui-icon-plus"  
-                                             actionListener="#{detalleController.prepareCreate(cursoController.selected)}" 
-                                             update=":DetalleCreateForm" oncomplete="PF('DetalleCreateDialog').show()"/>                            
+                            </p:dialog>-->
+                                
+                            
                         </p:column>
                         <p:column style="text-align: center">
                             <f:facet name="header">
@@ -232,52 +238,7 @@
                             <f:facet name="header">
                                 <h:outputText value="Módulos"/>
                             </f:facet>
-                            <!--<p:commandButton icon="ui-icon-search" update="ModuloViewForm" 
-                                oncomplete="PF('ModuloViewDialog').show()" actionListener="{moduloController.SetItemsWhere(cursoController.selected)}"/>
                             
-                            <p:dialog id="ModuloViewForm" widgetVar="ModuloViewDialog" modal="true" resizable="false" appendTo="@(body)" 
-                                      width="80%" header="{bundle.ViewInstructorTitle}">
-                                <h:form id="ModuloListForm">
-                                    <div id="listaL">
-                                        <p:dataTable id="datalist" value="{moduloController.itemsWhere}" var="item"
-                                                     selectionMode="single" selection="{moduloController.selected}"
-                                                     paginator="true"
-                                                     rowKey="{item.idModulo}"
-                                                     rows="10"
-                                                     rowsPerPageTemplate="10,20,30,40,50"
-                                                     >
-
-                                            <p:column>
-                                                <f:facet name="header">
-                                                    <h:outputText value="{bundle.ListModuloTitle_idModulo}"/>
-                                                </f:facet>
-                                                <h:outputText value="{item.idModulo}"/>
-                                            </p:column>
-                                            <p:column>
-                                                <f:facet name="header">
-                                                    <h:outputText value="{bundle.ListModuloTitle_nombre}"/>
-                                                </f:facet>
-                                                <h:outputText value="{item.nombre}"/>
-                                            </p:column>
-                                            <p:column>
-                                                <f:facet name="header">
-                                                    <h:outputText value="{bundle.ListModuloTitle_descripcion}"/>
-                                                </f:facet>
-                                                <h:outputText value="{item.descripcion}"/>
-                                            </p:column>
-                                            <p:column>
-                                                <f:facet name="header">
-                                                    <h:outputText value="{bundle.ListModuloTitle_idCurso}"/>
-                                                </f:facet>
-                                                <h:outputText value="{item.idCurso}"/>
-                                            </p:column>
-                                                
-                                        </p:dataTable>
-                                    </div>
-                                </h:form>
-                                    <p:commandButton id="deleteButton2" icon="ui-icon-trash"  value="{bundle.Delete}" actionListener="{moduloController.destroy()}" disabled="{empty moduloController.selected}"/>
-                       
-                            </p:dialog>-->
                             <p:commandButton id="deleteButton3" icon="ui-icon-search" 
                                              actionListener="#{moduloController.SetItemsWhere(cursoController.selected)}" update=":ModuloListForm" 
                                              oncomplete="PF('ModuloListDialog').show()"/>
@@ -303,6 +264,7 @@
             <ui:include src="View.xhtml"/>
             <ui:include src="../detalle/Create.xhtml"/>
             <ui:include src="../modulo/ListDelete.xhtml"/>
+            <ui:include src="../detalle/ListDelete.xhtml"/>
         </ui:define>
     </ui:composition>
 

@@ -8,7 +8,8 @@
 
     <ui:composition>
 
-        <p:dialog id="ModuloListDlg" widgetVar="ModuloListDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewModuloTitle}">
+        <p:dialog id="ModuloListDlg" widgetVar="ModuloListDialog" modal="true" resizable="false" appendTo="@(body)" 
+                  header="#{bundle.ViewModuloTitle}">
             <h:form id="ModuloListForm">
                 
                 <div id="listaL">
@@ -44,7 +45,9 @@
                             <h:outputText value="#{item.idCurso}"/>
                         </p:column>
                         <f:facet name="footer">
-                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{moduloController.destroy}" update=":growl,datalist" disabled="#{empty moduloController.selected}"/>
+                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" 
+                                             actionListener="#{moduloController.destroy}" update=":growl,datalist" 
+                                             disabled="#{empty moduloController.selected}"/>
                         </f:facet>
                     </p:dataTable>
                 </div>

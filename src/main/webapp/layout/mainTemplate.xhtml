@@ -17,6 +17,9 @@ and open the template in the editor.
         <h:outputStylesheet name="primecss.css" library="css"/>
         <h:outputScript library="js" name="primecss.js" />
         
+        <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css" />
+        
+        
     </h:head>
 
     <h:body class="bod">
@@ -24,11 +27,12 @@ and open the template in the editor.
         <!--style="background-color:red" -->
         <h:panelGroup layout="block" >
 
-            <div class="wrapper">
+            <div class="wrapper" >
+                <div style="background-color: white">
                 <header class="header">
                     <h:panelGrid columns="2"  >
                         
-                        <img style="height:162px" src="http://www.ucuenca.edu.ec/images/cabeceras_facultades/dep_educacionContinua-14.png"/>
+                        <img style="height:182px" src="http://www.ucuenca.edu.ec/images/cabeceras_facultades/dep_educacionContinua-14.png"/>
                         
                         <p:panel id="titulopagina" style="text-align: left; border: 0px;">
                             Administración  <br /> de Cursos
@@ -36,15 +40,29 @@ and open the template in the editor.
                     </h:panelGrid>
                     <br/>
                 </header>
+                </div>
                 
                  <!-- ============ MENU ============-->
-                 <h:form id="frmLeft" style="background-color: rgb(1, 54, 129)">
+                 
+                 <h:form id="frmLeft" style="background-color: rgb(1, 54, 129); height: 35px; margin-top: -15px">
 
-                    <p:tabMenu style="margin-left: 10%; width: 80%">
-                        <p:menuitem value="Curso" outcome="/curso/List" style="font-size: 16px">
+                     <div style=" margin-left: 10%; width: 80%; background-color: rgb(1, 54, 129); height: 35px;">
+    <ul class="menu1">
+    <li><a href="../curso/List.xhtml">Curso</a></li>
+    <li><a href="../detalle/List.xhtml">Detalles</a></li>
+    <li><a href="../instructor/List.xhtml">Instructor</a></li>
+    <li><a href="../modulo/List.xhtml">Modulos</a></li>
+    <li><a href="../dirigidoA/List.xhtml">Especialidades</a></li>
+    <li><a href="../tipo/List.xhtml">Tipos de Curso</a></li>
+</ul>
+</div>
+                     
+                    <!--<p:tabMenu style="margin-left: 10%; width: 80%; " >
+                         
+                         <p:menuitem value="Curso" outcome="/curso/List" style="font-size: 16px">
                         </p:menuitem>
                         
-                        <p:menuitem value="Detalles" outcome="/detalle/List" style="font-size: 16px">
+                         <p:menuitem value="Detalles" outcome="/detalle/List" style="font-size: 16px">
                         </p:menuitem>
                         
                         <p:menuitem value="Instructor" outcome="/instructor/List" style="font-size: 16px">
@@ -58,7 +76,7 @@ and open the template in the editor.
                         
                         <p:menuitem value="Tipos de Curso" outcome="/tipo/List" style="font-size: 16px">
                         </p:menuitem>
-                    </p:tabMenu>      
+                    </p:tabMenu>  -->
                 </h:form>
                  
                 <!-- ============ CONTENIDO ============-->
@@ -66,11 +84,12 @@ and open the template in the editor.
              
                 <div class="middle">
                     <p:growl id="growl" life="3000" />
-                    <div class="container" id="lista">
+                    <div class="container" id="lista" >
                         <ui:insert name="body">Content</ui:insert>
                     </div>
                 </div>
             </div>
+            
         </h:panelGroup>
     </h:body>
 </html>
