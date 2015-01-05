@@ -45,7 +45,7 @@
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListModuloTitle_idCurso}"/>
                             </f:facet>
-                            <h:outputText value="#{item.idCurso}"/>
+                            <h:outputText value="#{item.idCurso.nombre}"/>
                         </p:column>
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{moduloController.prepareCreate}" update=":ModuloCreateForm" oncomplete="PF('ModuloCreateDialog').show()"/>
