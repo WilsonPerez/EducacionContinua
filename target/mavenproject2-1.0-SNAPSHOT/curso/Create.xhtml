@@ -13,8 +13,6 @@
                 <div id="listaL">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{cursoController.selected != null}">
-                        <p:outputLabel value="#{bundle.CreateCursoLabel_idCurso}" for="idCurso" />
-                        <p:inputText id="idCurso" value="#{cursoController.selected.idCurso}" title="#{bundle.CreateCursoTitle_idCurso}" required="true" requiredMessage="#{bundle.CreateCursoRequiredMessage_idCurso}"/>
                         <p:outputLabel value="#{bundle.CreateCursoLabel_nombre}" for="nombre" />
                         <p:inputText id="nombre" value="#{cursoController.selected.nombre}" title="#{bundle.CreateCursoTitle_nombre}" required="true" requiredMessage="#{bundle.CreateCursoRequiredMessage_nombre}"/>
                         <p:outputLabel value="#{bundle.CreateCursoLabel_descripccion}" for="descripccion" />
@@ -30,7 +28,7 @@
                             <p:tab title="Detalle">
                                 <h:form id="DetalleCreateForm">
                                     <h:panelGroup id="display">
-                                        <p:panelGrid columns="2" rendered="#{detalleController.selected != null}">
+                                        <p:panelGrid columns="2" rendered="#{detalleController.selectedNull != null}" >
                                             <p:outputLabel value="#{bundle.CreateDetalleLabel_objetivos}" for="objetivos" />
                                             <p:inputTextarea id="objetivos" value="#{detalleController.selected.objetivos}" title="#{bundle.CreateDetalleTitle_objetivos}" required="true" requiredMessage="#{bundle.CreateDetalleRequiredMessage_objetivos}" maxlength="200" rows="1" style="width: 98%; height: 70px" />
                                             <p:outputLabel value="#{bundle.CreateDetalleLabel_fechaInscripcion}" for="fechaInscripcion" />
@@ -132,51 +130,14 @@
                                 </p:dialog>
                             </h:form>
                         </p:tab>
-                        <!--<p:tab title="Módulo">
-                            <h:form id="ModuloListForm">
-                <p:panel header="#{bundle.ListModuloTitle}">
-                    <p:dataTable id="datalist" value="#{moduloController.itemsByCreate}" var="item"
-                                 selectionMode="single" selection="#{moduloController.selected}"
-                                 paginator="true"
-                                 rowKey="#{item.idModulo}"
-                                 rows="10"
-                                 rowsPerPageTemplate="10,20,30,40,50"
-                                 >
-
-                       <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListModuloTitle_idModulo}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.idModulo}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListModuloTitle_nombre}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.nombre}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListModuloTitle_descripcion}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.descripcion}"/>
-                        </p:column>
-                        <f:facet name="footer">
-                            <a href="./instructor/List.xhtml" target="_blank"> Nuevo</a>
-                              
-                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" 
-                                             actionListener="#{moduloController.prepareCreate(cursoController.selected)}" update=":ModuloCreateForm" 
-                                             oncomplete="PF('ModuloCreateDialog').show()"/>
-                            
-                            
-                        </f:facet>
-                    </p:dataTable>
-                </p:panel>
-            </h:form>
-                        </p:tab>-->
+                        
                     </p:tabView>
-                    <p:commandButton actionListener="#{cursoController.create(detalleController.selected)}" value="#{bundle.Save}" update="display,:CursoListForm:datalist,:growl" oncomplete="handleSubmit(args,'CursoCreateDialog');"/>
+                    <div style="text-align: center; margin-top: 4px">
+                        
+                    <p:commandButton actionListener="#{cursoController.create(detalleController.selected)}" value="#{bundle.Save}" 
+                                     update="display,:CursoListForm:datalist,:growl" oncomplete="PF('CursoCreateDialog').hide();"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="CursoCreateDialog.hide()"/>
+                    </div>
                 </h:panelGroup>
                     </div>
             </h:form>

@@ -18,8 +18,10 @@
                         <p:outputLabel value="#{bundle.EditDirigidoALabel_nombre}" for="nombre" />
                         <p:inputText id="nombre" value="#{dirigidoAController.selected.nombre}" title="#{bundle.EditDirigidoATitle_nombre}" />
                     </p:panelGrid>
+                    <div style="text-align: center; margin-top: 4px">
                     <p:commandButton actionListener="#{dirigidoAController.update}" value="#{bundle.Save}" update="display,:DirigidoAListForm:datalist,:growl" oncomplete="PF('DirigidoAEditDialog').hide();"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="DirigidoAEditDialog.hide()"/>
+                    </div>
                 </h:panelGroup>
                 </div>
             </h:form>

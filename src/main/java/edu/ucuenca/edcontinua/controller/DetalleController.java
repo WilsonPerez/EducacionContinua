@@ -34,10 +34,12 @@ public class DetalleController implements Serializable {
     private List<Detalle> items = null;
     private List<Detalle> itemsWhere = null;
     private Detalle selected;
+    private Detalle selectedNull;
     Curso cursoSelect=null;
     
     boolean createDetalle=false;
     boolean visibleCurso=false;
+    
 
     public DetalleController() {
     }
@@ -50,6 +52,18 @@ public class DetalleController implements Serializable {
         }
         return selected;
     }
+
+    public Detalle getSelectedNull() {
+     
+            selectedNull=new Detalle();
+        selected=selectedNull;
+        return selectedNull;
+    }
+
+    public void setSelectedNull(Detalle selectedNull) {
+        this.selectedNull = selectedNull;
+    }
+    
 
     public boolean isVisibleCurso() {
         return visibleCurso;

@@ -52,90 +52,6 @@
                                 <p:commandButton id="deleteButton4" icon="ui-icon-search" 
                                              actionListener="#{detalleController.SetItemsWhere(cursoController.selected)}" update=":DetalleListForm" 
                                              oncomplete="PF('DetalleListDialog').show()"/>
-                             <!--<p:commandButton icon="ui-icon-search" update="DetalleViewForm" 
-                                oncomplete="PF('DetalleViewDialog').show()" actionListener="{detalleController.SetItemsWhere(cursoController.selected)}"/>
-                            
-                           <p:dialog id="DetalleViewForm" widgetVar="DetalleViewDialog" modal="true" resizable="false" appendTo="@(body)" 
-                                      width="80%" header="{bundle.ViewInstructorTitle}">
-                                <h:form id="DetalleListForm">
-                                    <div id="listaL">
-                                        <p:dataTable id="datalist" value="{detalleController.itemsWhere}" var="item"
-                                                     selectionMode="single" selection="{detalleController.selected}"
-                                                     paginator="true"
-                                                     rowKey="{item.idDetalle}"
-                                                     rows="10"
-                                                     rowsPerPageTemplate="10,20,30,40,50"
-                                                     >
-
-                                            <p:column>
-                                                <f:facet name="header">
-                                                    <h:outputText value="{bundle.ListDetalleTitle_idDetalle}"/>
-                                                </f:facet>
-                                                <h:outputText value="{item.idDetalle}"/>
-                                            </p:column>
-                                            <p:column>
-                                                <f:facet name="header">
-                                                    
-                                                    <h:outputText value="#{bundle.ListDetalleTitle_objetivos}"/>
-                                                </f:facet>
-                                                <h:outputText value="{item.objetivos}"/>
-                                            </p:column>
-                                            <p:column>
-                                                <f:facet name="header">
-                                                    <h:outputText value="#{bundle.ListDetalleTitle_fechaInscripcion}"/>
-                                                </f:facet>
-                                                <h:outputText value="{item.fechaInscripcion}">
-                                                    <f:convertDateTime pattern="MM/dd/yyyy" />
-                                                </h:outputText>
-                                            </p:column>
-                                            <p:column>
-                                                <f:facet name="header">
-                                                    <h:outputText value="#{bundle.ListDetalleTitle_numHoras}"/>
-                                                </f:facet>
-                                                <h:outputText value="{item.numHoras}"/>
-                                            </p:column>
-                                            <p:column>
-                                                <f:facet name="header">
-                                                    <h:outputText value="#{bundle.ListDetalleTitle_lugarInscripcion}"/>
-                                                </f:facet>
-                                                <h:outputText value="{item.lugarInscripcion}"/>
-                                            </p:column>
-                                            <p:column>
-                                                <f:facet name="header">
-                                                    <h:outputText value="#{bundle.ListDetalleTitle_direccionCurso}"/>
-                                                </f:facet>
-                                                <h:outputText value="{item.direccionCurso}"/>
-                                            </p:column>
-                                            <p:column>
-                                                <f:facet name="header">
-                                                    <h:outputText value="#{bundle.ListDetalleTitle_numTelefono}"/>
-                                                </f:facet>
-                                                <h:outputText value="{item.numTelefono}"/>
-                                            </p:column>
-                                            <p:column>
-                                                <f:facet name="header">
-                                                    <h:outputText value="#{bundle.ListDetalleTitle_precio}"/>
-                                                </f:facet>
-                                                <h:outputText value="{item.precio}"/>
-                                            </p:column>
-                                            <p:column>
-                                                <f:facet name="header">
-                                                    <h:outputText value="#{bundle.ListDetalleTitle_numCupos}"/>
-                                                </f:facet>
-                                                <h:outputText value="{item.numCupos}"/>
-                                            </p:column>
-                                            <p:column>
-                                                <f:facet name="header">
-                                                    <h:outputText value="#{bundle.ListDetalleTitle_idCurso}"/>
-                                                </f:facet>
-                                                <h:outputText value="{item.idCurso}"/>
-                                            </p:column>
-
-                                        </p:dataTable>
-                                    </div>
-                                </h:form>
-                            </p:dialog>-->
-                                
                             
                         </p:column>
                         <p:column style="text-align: center">
@@ -146,7 +62,7 @@
                                 oncomplete="PF('DirigidoaViewDialog').show()" actionListener="#{dirigidoAController.SetItemsWhere(cursoController.selected)}"/>
                             
                             <p:dialog id="DirigidoaViewForm" widgetVar="DirigidoaViewDialog" modal="true" resizable="false" appendTo="@(body)" 
-                                      width="80%" header="#{bundle.ViewInstructorTitle}">
+                                      width="80%" header="#{bundle.ViewDirigidoATitle}">
                                 <h:form id="DirigidoAListForm">
                                     <div id="listaL">
                                         <p:dataTable id="datalist" value="#{dirigidoAController.itemsWhere}" var="item"
@@ -238,13 +154,12 @@
                             <f:facet name="header">
                                 <h:outputText value="Módulos"/>
                             </f:facet>
-                            
-                            <p:commandButton id="deleteButton3" icon="ui-icon-search" 
-                                             actionListener="#{moduloController.SetItemsWhere(cursoController.selected)}" update=":ModuloListForm" 
-                                             oncomplete="PF('ModuloListDialog').show()"/>
                             <p:commandButton id="createButton3" icon="ui-icon-plus" 
                                              actionListener="#{moduloController.prepareCreate(cursoController.selected)}" update=":ModuloCreateForm" 
                                              oncomplete="PF('ModuloCreateDialog').show()"/>
+                            <p:commandButton id="deleteButton3" icon="ui-icon-search" 
+                                             actionListener="#{moduloController.SetItemsWhere(cursoController.selected)}" update=":ModuloListForm" 
+                                             oncomplete="PF('ModuloListDialog').show()"/>
                             
                             
                         </p:column>

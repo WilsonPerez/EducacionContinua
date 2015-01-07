@@ -111,11 +111,10 @@
                                 </h:form>
                             </p:tab>
                         </p:tabView>
-                        
-                        <p:commandButton actionListener="#{cursoController.update}" value="#{bundle.Save}" update="display,:CursoListForm:datalist,:growl" oncomplete="handleSubmit(args, 'CursoEditDialog');"/>
-                        <p:commandButton value="#{bundle.Cancel}" onclick="CursoEditDialog.hide()"/>
-                        
-                        
+                        <div style="text-align: center; margin-top: 4px">
+                        <p:commandButton actionListener="#{cursoController.update}" value="#{bundle.Save}" update="display,:CursoListForm:datalist,:growl" oncomplete="PF('CursoEditDialog').hide();"/>
+                        <p:commandButton value="#{bundle.Cancel}" onclick="CursoEditDialog.hide()"/>   
+                        </div>
                     </h:panelGroup>
                 </div>
             </h:form>

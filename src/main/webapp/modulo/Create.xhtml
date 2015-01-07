@@ -13,8 +13,6 @@
                 <div id="listaL">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{moduloController.selected != null}">
-                        <p:outputLabel value="#{bundle.CreateModuloLabel_idModulo}" for="idModulo" />
-                        <p:inputText id="idModulo" value="#{moduloController.selected.idModulo}" title="#{bundle.CreateModuloTitle_idModulo}" required="true" requiredMessage="#{bundle.CreateModuloRequiredMessage_idModulo}"/>
                         <p:outputLabel value="#{bundle.CreateModuloLabel_nombre}" for="nombre" />
                         <p:inputText id="nombre" value="#{moduloController.selected.nombre}" title="#{bundle.CreateModuloTitle_nombre}" required="true" requiredMessage="#{bundle.CreateModuloRequiredMessage_nombre}"/>
                         <p:outputLabel value="#{bundle.CreateModuloLabel_descripcion}" for="descripcion" />
@@ -26,9 +24,10 @@
                                            itemValue="#{idCursoItem}"/>
                         </p:selectOneMenu>
                     </p:panelGrid>
-                     <!--update="display,:ModuloListForm:datalist,:growl"--> 
+                     <div style="text-align: center; margin-top: 4px">
                     <p:commandButton actionListener="#{moduloController.create}" value="#{bundle.Save}" oncomplete="PF('ModuloCreateDialog').hide();" update="display,:ModuloListForm:datalist,:growl"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="ModuloCreateDialog.hide()"/>
+                     </div>
                 </h:panelGroup>
                 </div>
             </h:form>

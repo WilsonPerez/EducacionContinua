@@ -26,8 +26,10 @@
                         <p:outputLabel value="#{bundle.CreateInstructorLabel_tipo}" for="tipo" />
                         <p:inputText id="tipo" value="#{instructorController.selected.tipo}" title="#{bundle.CreateInstructorTitle_tipo}" />
                     </p:panelGrid>
+                    <div style="text-align: center; margin-top: 4px">
                     <p:commandButton actionListener="#{instructorController.create}" value="#{bundle.Save}" update="display,:InstructorListForm:datalist,:growl" oncomplete="PF('InstructorCreateDialog').hide();"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="InstructorCreateDialog.hide()"/>
+                    </div>
                 </h:panelGroup>
                 </div>
             </h:form>

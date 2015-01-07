@@ -27,8 +27,10 @@
                                            itemValue="#{idCursoItem}"/>
                         </p:selectOneMenu>
                     </p:panelGrid>
+                    <div style="text-align: center; margin-top: 4px">
                     <p:commandButton actionListener="#{moduloController.update}" value="#{bundle.Save}" update="display,:ModuloListForm:datalist,:growl" oncomplete="PF('ModuloEditDialog').hide();"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="ModuloEditDialog.hide()"/>
+                    </div>
                 </h:panelGroup>
                 </div>
             </h:form>

@@ -18,8 +18,10 @@
                         <p:outputLabel value="#{bundle.EditTipoLabel_nombre}" for="nombre" />
                         <p:inputText id="nombre" value="#{tipoController.selected.nombre}" title="#{bundle.EditTipoTitle_nombre}" />
                     </p:panelGrid>
+                    <div style="text-align: center; margin-top: 4px">
                     <p:commandButton actionListener="#{tipoController.update}" value="#{bundle.Save}" update="display,:TipoListForm:datalist,:growl" oncomplete="PF('TipoEditDialog').hide();"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="TipoEditDialog.hide()"/>
+                    </div>
                 </h:panelGroup>
                 </div>
             </h:form>

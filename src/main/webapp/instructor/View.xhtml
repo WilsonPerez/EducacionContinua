@@ -26,7 +26,9 @@
                         <h:outputText value="#{bundle.ViewInstructorLabel_tipo}"/>
                         <h:outputText value="#{instructorController.selected.tipo}" title="#{bundle.ViewInstructorTitle_tipo}"/>
                     </p:panelGrid>
+                    <div style="text-align: center; margin-top: 4px">
                     <p:commandButton value="#{bundle.Close}" onclick="InstructorViewDialog.hide()"/>
+                    </div>
                 </h:panelGroup>
                 </div>
             </h:form>

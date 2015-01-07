@@ -26,8 +26,11 @@
                         <p:outputLabel value="#{bundle.EditInstructorLabel_tipo}" for="tipo" />
                         <p:inputText id="tipo" value="#{instructorController.selected.tipo}" title="#{bundle.EditInstructorTitle_tipo}" />
                     </p:panelGrid>
+                    
+                    <div style="text-align: center; margin-top: 4px">
                     <p:commandButton actionListener="#{instructorController.update}" value="#{bundle.Save}" update="display,:InstructorListForm:datalist,:growl" oncomplete="PF('InstructorEditDialog').hide();"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="InstructorEditDialog.hide()"/>
+                    </div>
                 </h:panelGroup>
                 </div>
             </h:form>

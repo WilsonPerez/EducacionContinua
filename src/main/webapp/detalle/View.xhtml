@@ -37,7 +37,9 @@
                         <h:outputText value="#{bundle.ViewDetalleLabel_idCurso}"/>
                         <h:outputText value="#{detalleController.selected.idCurso}" title="#{bundle.ViewDetalleTitle_idCurso}"/>
                     </p:panelGrid>
+                    <div style="text-align: center; margin-top: 4px">
                     <p:commandButton value="#{bundle.Close}" onclick="DetalleViewDialog.hide()"/>
+                    </div>
                 </h:panelGroup>
                 </div>
             </h:form>

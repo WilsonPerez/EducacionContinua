@@ -18,7 +18,9 @@
                         <h:outputText value="#{bundle.ViewTipoLabel_nombre}"/>
                         <h:outputText value="#{tipoController.selected.nombre}" title="#{bundle.ViewTipoTitle_nombre}"/>
                     </p:panelGrid>
+                    <div style="text-align: center; margin-top: 4px">
                     <p:commandButton value="#{bundle.Close}" onclick="TipoViewDialog.hide()"/>
+                    </div>
                 </h:panelGroup>
                 </div>
             </h:form>

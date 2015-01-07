@@ -9,7 +9,7 @@
     <ui:composition>
 
         <p:dialog id="DetalleListDlg" widgetVar="DetalleListDialog" modal="true" resizable="false" appendTo="@(body)" 
-                  header="#{bundle.ViewModuloTitle}">
+                  header="#{bundle.ViewDetalleTitle}" width="80%">
             <h:form id="DetalleListForm">
                 <p:panel >
                     <div id="listaL">
@@ -88,7 +88,7 @@
                                             <f:facet name="footer">
                             <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" 
                                              actionListener="#{detalleController.destroy}" update=":growl,datalist" 
-                                             disabled="#{empty detalleController.selected}"/>
+                                             disabled="#{empty detalleController.selected}" oncomplete="PF('DetalleListDialog').hide();"/>
                         </f:facet>
                                         </p:dataTable>
                                     </div>

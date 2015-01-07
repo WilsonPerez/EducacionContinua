@@ -53,9 +53,6 @@ public class CursoController implements Serializable {
     @EJB
     private edu.ucuenca.edcontinua.farcade.DetalleFacade ejbFacadeDetalle;
     
-    //private Detalle selected;
-    
-    
     private DualListModel<Modulo> themes;
     private Modulo theme = new Modulo();
     
@@ -72,6 +69,8 @@ public class CursoController implements Serializable {
     List<CursoDirigidoa> DirigidoaCurso = new ArrayList<CursoDirigidoa>();  //Lo q se tenia antes en DualListModel<CursoDirigidoa>
     
     Detalle detalleGuardar = new Detalle();
+    
+    private Curso cursoAux=null;
 
     public CursoController() {
         
@@ -82,6 +81,10 @@ public class CursoController implements Serializable {
         List<Modulo> citiesTarget = new ArrayList<Modulo>();
         themes= new DualListModel<Modulo>(moduls, citiesTarget);
         
+        initDualList();
+    }
+
+    public void initDualList(){
         List<DirigidoA> dirigidos = ejbFacadeDigido.findAll();
         List<DirigidoA> dirigidos2 = new ArrayList<DirigidoA>();
         dirigidosa= new DualListModel<DirigidoA>(dirigidos, dirigidos2);
@@ -91,7 +94,6 @@ public class CursoController implements Serializable {
         
         instructores= new DualListModel<Instructor>(instructores2, instructores3);
     }
-
     public DualListModel<Modulo> getThemes() {
         return themes;
     }
@@ -169,6 +171,8 @@ public class CursoController implements Serializable {
 
     public Curso prepareCreate() {
         selected = new Curso();
+        initDualList();
+        
         initializeEmbeddableKey();
         return selected;
     }
@@ -179,6 +183,7 @@ public class CursoController implements Serializable {
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
         }
+        detalle=null;
     }
 
     public void update() {
@@ -210,6 +215,7 @@ public class CursoController implements Serializable {
     public void editInstructor(){
         setDataInstructor();
         setDataDirigidoa();
+        cursoAux=selected;
     }
     /**
      Se coloca los datos al momento de Editar el Instructor
@@ -276,11 +282,26 @@ public class CursoController implements Serializable {
     }
         
     private void persist(PersistAction persistAction, String successMessage) {
-        if (selected != null) {
+        if(selected == null && cursoAux!=null)
+            selected=cursoAux;
+        
+        if (selected != null ) {
             setEmbeddableKeys();
             try {
                 if (persistAction.toString().compareTo(PersistAction.CREATE.toString())==0) {
-                    getFacade().edit(selected);
+                    int count = ejbFacade.count();
+                    double floor = Math.floor(Math.random()*(999-10+1)+10);
+                    
+                    String [] abecedario = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", 
+                    "K", "L", "M","N","O","P","Q","R","S","T","U","V","W", "X","Y","Z" };
+
+                    int numRandon = (int) Math.round(Math.random() * 26 ) ;
+                    floor=floor*count;
+                    
+                    selected.setIdCurso(floor+abecedario[numRandon]+abecedario[numRandon]);
+                    getFacade().create(selected);
+                    
+                    //getFacade().edit(selected);
                     GuardarDetalle();
                     GuardarInstructor();
                     GuardarDirigidoa();
