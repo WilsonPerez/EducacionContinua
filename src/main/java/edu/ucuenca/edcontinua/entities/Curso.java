@@ -54,8 +54,8 @@ public class Curso implements Serializable {
     @JoinColumn(name = "id_tipo", referencedColumnName = "id_tipo")
     @ManyToOne
     private Tipo idTipo;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCurso")
-    private Collection<CursoInstructor> cursoInstructorCollection;
+    /*@OneToMany(cascade = CascadeType.ALL, mappedBy = "idCurso")
+    private Collection<CursoInstructor> cursoInstructorCollection;*/
     @OneToMany(mappedBy = "idCurso")
     private Collection<Modulo> moduloCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCurso")
@@ -107,14 +107,14 @@ public class Curso implements Serializable {
         this.idTipo = idTipo;
     }
 
-    @XmlTransient
+    /*@XmlTransient
     public Collection<CursoInstructor> getCursoInstructorCollection() {
         return cursoInstructorCollection;
     }
 
     public void setCursoInstructorCollection(Collection<CursoInstructor> cursoInstructorCollection) {
         this.cursoInstructorCollection = cursoInstructorCollection;
-    }
+    }*/
 
     @XmlTransient
     public Collection<Modulo> getModuloCollection() {

@@ -16,13 +16,13 @@
                                  paginator="true"
                                  rowKey="#{item.ci}"
                                  rows="10"
-                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 rowsPerPageTemplate="10,20,30,40,50" filteredValue="#{instructorController.itemsFilter}"
                                  >
 
                         <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
                         <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
 
-                        <p:column>
+                        <p:column sortBy="#{item.ci}" filterMatchMode="contains" filterBy="#{item.ci}">
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListInstructorTitle_ci}"/>
                             </f:facet>
@@ -34,7 +34,7 @@
                             </f:facet>
                             <h:outputText value="#{item.nombre}"/>
                         </p:column>
-                        <p:column>
+                        <p:column sortBy="#{item.apellido}">
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListInstructorTitle_apellido}"/>
                             </f:facet>
@@ -46,13 +46,13 @@
                             </f:facet>
                             <h:outputText value="#{item.profesion}"/>
                         </p:column>
-                        <p:column>
+                        <p:column sortBy="#{item.estudiosAdicionales}">
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListInstructorTitle_estudiosAdicionales}"/>
                             </f:facet>
                             <h:outputText value="#{item.estudiosAdicionales}"/>
                         </p:column>
-                        <p:column>
+                        <p:column sortBy="#{item.tipo}">
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListInstructorTitle_tipo}"/>
                             </f:facet>

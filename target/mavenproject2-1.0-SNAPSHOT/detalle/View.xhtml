@@ -22,6 +22,14 @@
                         <h:outputText value="#{detalleController.selected.fechaInscripcion}" title="#{bundle.ViewDetalleTitle_fechaInscripcion}">
                             <f:convertDateTime pattern="MM/dd/yyyy" />
                         </h:outputText>
+                        <h:outputText value="#{bundle.ListDetalleTitle_fechaInicio}:"/>
+                        <h:outputText value="#{detalleController.selected.fechaInicio}" title="#{bundle.ListDetalleTitle_fechaInicio}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ListDetalleTitle_fechaFin}:"/>
+                        <h:outputText value="#{detalleController.selected.fechaFin}" title="#{bundle.ListDetalleTitle_fechaFin}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
                         <h:outputText value="#{bundle.ViewDetalleLabel_numHoras}"/>
                         <h:outputText value="#{detalleController.selected.numHoras}" title="#{bundle.ViewDetalleTitle_numHoras}"/>
                         <h:outputText value="#{bundle.ViewDetalleLabel_lugarInscripcion}"/>

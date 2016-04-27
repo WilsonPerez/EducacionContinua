@@ -4,6 +4,8 @@ import edu.ucuenca.edcontinua.entities.Detalle;
 import edu.ucuenca.edcontinua.controller.util.JsfUtil;
 import edu.ucuenca.edcontinua.controller.util.JsfUtil.PersistAction;
 import edu.ucuenca.edcontinua.entities.Curso;
+import edu.ucuenca.edcontinua.entities.DirigidoA;
+import edu.ucuenca.edcontinua.entities.Instructor;
 import edu.ucuenca.edcontinua.farcade.DetalleFacade;
 
 import java.io.Serializable;
@@ -20,6 +22,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import org.primefaces.model.DualListModel;
 
 @Named("detalleController")
 @SessionScoped
@@ -30,8 +33,8 @@ public class DetalleController implements Serializable {
     @EJB
     private edu.ucuenca.edcontinua.farcade.DetalleFacade ejbFacadeDetalle;
     
-    
     private List<Detalle> items = null;
+    private List<Detalle> itemsFilter;
     private List<Detalle> itemsWhere = null;
     private Detalle selected;
     private Detalle selectedNull;
@@ -40,7 +43,7 @@ public class DetalleController implements Serializable {
     boolean createDetalle=false;
     boolean visibleCurso=false;
     
-
+    
     public DetalleController() {
     }
 
@@ -236,4 +239,12 @@ public class DetalleController implements Serializable {
 
     }
 
+    public List<Detalle> getItemsFilter() {
+        return itemsFilter;
+    }
+
+    public void setItemsFilter(List<Detalle> itemsFilter) {
+        this.itemsFilter = itemsFilter;
+    }
+    
 }

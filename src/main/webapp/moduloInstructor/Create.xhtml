@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.CreateModuloInstructorTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.CreateModuloInstructorLabel_idCursoInstructor}" for="idCursoInstructor" />
+                    <h:inputText id="idCursoInstructor" value="#{moduloInstructorController.selected.idCursoInstructor}" title="#{bundle.CreateModuloInstructorTitle_idCursoInstructor}" required="true" requiredMessage="#{bundle.CreateModuloInstructorRequiredMessage_idCursoInstructor}"/>
+                    <h:outputLabel value="#{bundle.CreateModuloInstructorLabel_idModulo}" for="idModulo" />
+                    <h:selectOneMenu id="idModulo" value="#{moduloInstructorController.selected.idModulo}" title="#{bundle.CreateModuloInstructorTitle_idModulo}" required="true" requiredMessage="#{bundle.CreateModuloInstructorRequiredMessage_idModulo}">
+                        <f:selectItems value="#{moduloController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.CreateModuloInstructorLabel_idInstructor}" for="idInstructor" />
+                    <h:selectOneMenu id="idInstructor" value="#{moduloInstructorController.selected.idInstructor}" title="#{bundle.CreateModuloInstructorTitle_idInstructor}" required="true" requiredMessage="#{bundle.CreateModuloInstructorRequiredMessage_idInstructor}">
+                        <f:selectItems value="#{instructorController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{moduloInstructorController.create}" value="#{bundle.CreateModuloInstructorSaveLink}" />
+                <br />
+                <br />
+                <h:commandLink action="#{moduloInstructorController.prepareList}" value="#{bundle.CreateModuloInstructorShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.CreateModuloInstructorIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

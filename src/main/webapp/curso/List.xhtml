@@ -16,26 +16,26 @@
                                  paginator="true"
                                  rowKey="#{item.idCurso}"
                                  rows="8"
-                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 rowsPerPageTemplate="10,20,30,40,50" filteredValue="#{cursoController.itemsFilter}"
                                  >
 
                         <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
                         <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
 
-                        <p:column style="text-align: center">
+                        <p:column style="text-align: center" sortBy="#{item.idCurso}" filterMatchMode="contains" filterBy="#{item.idCurso}">
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListCursoTitle_idCurso}"/>
                             </f:facet>
                             <h:outputText value="#{item.idCurso}"/>
                         </p:column>
-                        <p:column>
+                        <p:column sortBy="#{item.nombre}" filterMatchMode="contains" filterBy="#{item.nombre}">
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListCursoTitle_nombre}"/>
                             </f:facet>
                             <h:outputText value="#{item.nombre}"/>
                         </p:column>
                         
-                        <p:column>
+                        <p:column sortBy="#{item.idTipo.nombre}">
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListCursoTitle_idTipo}"/>
                             </f:facet>
@@ -90,66 +90,66 @@
                                 </h:form>
                             </p:dialog>
                         </p:column>
-                        <p:column style="text-align: center">
+                        <!--<p:column style="text-align: center">
                             <f:facet name="header">
                                 <h:outputText value="Instructor"/>
                             </f:facet>
                             <p:commandButton icon="ui-icon-search" update="InstructorViewForm" 
-                                oncomplete="PF('InstructorViewDialog').show()" actionListener="#{instructorController.SetItemsWhere(cursoController.selected)}"/>
+                                oncomplete="PF('InstructorViewDialog').show()" actionListener="{instructorController.SetItemsWhere(cursoController.selected)}"/>
                             
                             <p:dialog id="InstructorViewForm" widgetVar="InstructorViewDialog" modal="true" resizable="true" 
-                                      appendTo="@(body)" header="#{bundle.ViewInstructorTitle}" width="80%">
+                                      appendTo="@(body)" header="{bundle.ViewInstructorTitle}" width="80%">
                                 <h:form id="InstructorViewForm2">
                                     <div id="listaL">
-                                        <p:dataTable id="datalist" value="#{instructorController.itemsWhere}" var="item"
-                                                    selectionMode="single" selection="#{instructorController.selected}"
+                                        <p:dataTable id="datalist" value="{instructorController.itemsWhere}" var="item"
+                                                    selectionMode="single" selection="{instructorController.selected}"
                                                     paginator="true"
-                                                    rowKey="#{item.ci}"
+                                                    rowKey="{item.ci}"
                                                     rows="10"
                                                     rowsPerPageTemplate="10,20,30,40,50"
                                                      >
 
                                             <p:column>
                                                 <f:facet name="header">
-                                                    <h:outputText value="#{bundle.ListInstructorTitle_ci}"/>
+                                                    <h:outputText value="{bundle.ListInstructorTitle_ci}"/>
                                                 </f:facet>
-                                                <h:outputText value="#{item.ci}"/>
+                                                <h:outputText value="{item.ci}"/>
                                             </p:column>
                                             <p:column>
                                                 <f:facet name="header">
-                                                    <h:outputText value="#{bundle.ListInstructorTitle_nombre}"/>
+                                                    <h:outputText value="{bundle.ListInstructorTitle_nombre}"/>
                                                 </f:facet>
-                                                <h:outputText value="#{item.nombre}"/>
+                                                <h:outputText value="{item.nombre}"/>
                                             </p:column>
                                             <p:column>
                                                 <f:facet name="header">
-                                                    <h:outputText value="#{bundle.ListInstructorTitle_apellido}"/>
+                                                    <h:outputText value="{bundle.ListInstructorTitle_apellido}"/>
                                                 </f:facet>
-                                                <h:outputText value="#{item.apellido}"/>
+                                                <h:outputText value="{item.apellido}"/>
                                             </p:column>
                                             <p:column>
                                                 <f:facet name="header">
-                                                    <h:outputText value="#{bundle.ListInstructorTitle_profesion}"/>
+                                                    <h:outputText value="{bundle.ListInstructorTitle_profesion}"/>
                                                 </f:facet>
-                                                <h:outputText value="#{item.profesion}"/>
+                                                <h:outputText value="{item.profesion}"/>
                                             </p:column>
                                             <p:column>
                                                 <f:facet name="header">
-                                                    <h:outputText value="#{bundle.ListInstructorTitle_estudiosAdicionales}"/>
+                                                    <h:outputText value="{bundle.ListInstructorTitle_estudiosAdicionales}"/>
                                                 </f:facet>
-                                                <h:outputText value="#{item.estudiosAdicionales}"/>
+                                                <h:outputText value="{item.estudiosAdicionales}"/>
                                             </p:column>
                                             <p:column>
                                                 <f:facet name="header">
-                                                    <h:outputText value="#{bundle.ListInstructorTitle_tipo}"/>
+                                                    <h:outputText value="{bundle.ListInstructorTitle_tipo}"/>
                                                 </f:facet>
-                                                <h:outputText value="#{item.tipo}"/>
+                                                <h:outputText value="{item.tipo}"/>
                                             </p:column>
                                         </p:dataTable>
                                         </div>
                                 </h:form>
                             </p:dialog>
-                        </p:column>
+                        </p:column>-->
                         <p:column style="text-align: center">
                             <f:facet name="header">
                                 <h:outputText value="Módulos"/>

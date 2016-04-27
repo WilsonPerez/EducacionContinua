@@ -37,6 +37,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Instructor.findByEstudiosAdicionales", query = "SELECT i FROM Instructor i WHERE i.estudiosAdicionales = :estudiosAdicionales"),
     @NamedQuery(name = "Instructor.findByTipo", query = "SELECT i FROM Instructor i WHERE i.tipo = :tipo")})
 public class Instructor implements Serializable {
+    
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -64,7 +65,7 @@ public class Instructor implements Serializable {
     @Column(name = "tipo")
     private String tipo;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idInstructor")
-    private Collection<CursoInstructor> cursoInstructorCollection;
+    private Collection<ModuloInstructor> moduloInstructorCollection;
 
     public Instructor() {
     }
@@ -126,7 +127,7 @@ public class Instructor implements Serializable {
     public void setTipo(String tipo) {
         this.tipo = tipo;
     }
-
+/*
     @XmlTransient
     public Collection<CursoInstructor> getCursoInstructorCollection() {
         return cursoInstructorCollection;
@@ -134,7 +135,7 @@ public class Instructor implements Serializable {
 
     public void setCursoInstructorCollection(Collection<CursoInstructor> cursoInstructorCollection) {
         this.cursoInstructorCollection = cursoInstructorCollection;
-    }
+    }*/
 
     @Override
     public int hashCode() {
@@ -159,6 +160,15 @@ public class Instructor implements Serializable {
     @Override
     public String toString() {
         return "edu.ucuenca.edcontinua.entities.Instructor[ ci=" + ci + " ]";
+    }
+
+    @XmlTransient
+    public Collection<ModuloInstructor> getModuloInstructorCollection() {
+        return moduloInstructorCollection;
+    }
+
+    public void setModuloInstructorCollection(Collection<ModuloInstructor> moduloInstructorCollection) {
+        this.moduloInstructorCollection = moduloInstructorCollection;
     }
     
 }

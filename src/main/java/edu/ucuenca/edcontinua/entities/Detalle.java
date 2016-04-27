@@ -41,7 +41,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Detalle.findByDireccionCurso", query = "SELECT d FROM Detalle d WHERE d.direccionCurso = :direccionCurso"),
     @NamedQuery(name = "Detalle.findByNumTelefono", query = "SELECT d FROM Detalle d WHERE d.numTelefono = :numTelefono"),
     @NamedQuery(name = "Detalle.findByPrecio", query = "SELECT d FROM Detalle d WHERE d.precio = :precio"),
-    @NamedQuery(name = "Detalle.findByNumCupos", query = "SELECT d FROM Detalle d WHERE d.numCupos = :numCupos")})
+    @NamedQuery(name = "Detalle.findByNumCupos", query = "SELECT d FROM Detalle d WHERE d.numCupos = :numCupos"),
+    @NamedQuery(name = "Detalle.findByFechaInicio", query = "SELECT d FROM Detalle d WHERE d.fechaInicio = :fechaInicio"),
+    @NamedQuery(name = "Detalle.findByFechaFin", query = "SELECT d FROM Detalle d WHERE d.fechaFin = :fechaFin")})
 public class Detalle implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -75,6 +77,12 @@ public class Detalle implements Serializable {
     private Double precio;
     @Column(name = "num_cupos")
     private Integer numCupos;
+    @Column(name = "fecha_inicio")
+    @Temporal(TemporalType.DATE)
+    private Date fechaInicio;
+    @Column(name = "fecha_fin")
+    @Temporal(TemporalType.DATE)
+    private Date fechaFin;
     @JoinColumn(name = "id_curso", referencedColumnName = "id_curso")
     @ManyToOne
     private Curso idCurso;
@@ -162,6 +170,22 @@ public class Detalle implements Serializable {
 
     public void setNumCupos(Integer numCupos) {
         this.numCupos = numCupos;
+    }
+
+    public Date getFechaInicio() {
+        return fechaInicio;
+    }
+
+    public void setFechaInicio(Date fechaInicio) {
+        this.fechaInicio = fechaInicio;
+    }
+
+    public Date getFechaFin() {
+        return fechaFin;
+    }
+
+    public void setFechaFin(Date fechaFin) {
+        this.fechaFin = fechaFin;
     }
 
     public Curso getIdCurso() {

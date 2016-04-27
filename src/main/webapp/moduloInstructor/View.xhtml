@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ViewModuloInstructorTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{bundle.ViewModuloInstructorLabel_idCursoInstructor}"/>
+                    <h:outputText value="#{moduloInstructorController.selected.idCursoInstructor}" title="#{bundle.ViewModuloInstructorTitle_idCursoInstructor}"/>
+                    <h:outputText value="#{bundle.ViewModuloInstructorLabel_idModulo}"/>
+                    <h:outputText value="#{moduloInstructorController.selected.idModulo}" title="#{bundle.ViewModuloInstructorTitle_idModulo}"/>
+                    <h:outputText value="#{bundle.ViewModuloInstructorLabel_idInstructor}"/>
+                    <h:outputText value="#{moduloInstructorController.selected.idInstructor}" title="#{bundle.ViewModuloInstructorTitle_idInstructor}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{moduloInstructorController.destroyAndView}" value="#{bundle.ViewModuloInstructorDestroyLink}"/>
+                <br />
+                <br />
+                <h:link outcome="Edit" value="#{bundle.ViewModuloInstructorEditLink}"/>
+                <br />
+                <h:commandLink action="#{moduloInstructorController.prepareCreate}" value="#{bundle.ViewModuloInstructorCreateLink}" />
+                <br />
+                <h:commandLink action="#{moduloInstructorController.prepareList}" value="#{bundle.ViewModuloInstructorShowAllLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ViewModuloInstructorIndexLink}"/>
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

@@ -21,12 +21,13 @@
                             <p:outputLabel value="#{bundle.EditCursoLabel_descripccion}" for="descripccion" />
                             <p:inputText id="descripccion" value="#{cursoController.selected.descripccion}" title="#{bundle.EditCursoTitle_descripccion}" style="width: 98%"/>
                             <p:outputLabel value="#{bundle.EditCursoLabel_idTipo}" for="idTipo" />
-                            <p:selectOneMenu id="idTipo" value="#{cursoController.selected}" >
-                                <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <p:selectOneMenu id="idTipo" value="#{cursoController.selected.idTipo}" var="t">
                                 
                                 <f:selectItems value="#{tipoController.itemsAvailableSelectOne}"
-                                               var="idTipoItem"
-                                               itemValue="#{idTipoItem}"/>
+                                               var="idTipoItem" itemValue="#{idTipoItem}" itemLabel="#{idTipoItem.nombre}"/>
+                                    <p:column>
+                                        <h:outputText value="#{t.nombre}" />
+                                    </p:column>
                             </p:selectOneMenu>
                         </p:panelGrid>    
                         <p:tabView>
@@ -70,7 +71,7 @@
                                     </p:dialog>
                                 </h:form>
                             </p:tab>
-                            <p:tab title="Instructor">
+                            <!--<p:tab title="Instructor">
                                 <h:form>
                                     <p:growl id="msg" showDetail="true" escape="false" />
 
@@ -109,7 +110,7 @@
                                         </h:panelGrid>
                                     </p:dialog>
                                 </h:form>
-                            </p:tab>
+                            </p:tab>-->
                         </p:tabView>
                         <div style="text-align: center; margin-top: 4px">
                         <p:commandButton actionListener="#{cursoController.update}" value="#{bundle.Save}" update="display,:CursoListForm:datalist,:growl" oncomplete="PF('CursoEditDialog').hide();"/>

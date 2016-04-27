@@ -5,6 +5,8 @@ import edu.ucuenca.edcontinua.controller.util.JsfUtil;
 import edu.ucuenca.edcontinua.controller.util.JsfUtil.PersistAction;
 import edu.ucuenca.edcontinua.entities.Curso;
 import edu.ucuenca.edcontinua.entities.CursoInstructor;
+import edu.ucuenca.edcontinua.entities.Modulo;
+import edu.ucuenca.edcontinua.entities.ModuloInstructor;
 import edu.ucuenca.edcontinua.farcade.InstructorFacade;
 
 import java.io.Serializable;
@@ -29,12 +31,14 @@ public class InstructorController implements Serializable {
     @EJB
     private edu.ucuenca.edcontinua.farcade.InstructorFacade ejbFacade;
     @EJB
-    private edu.ucuenca.edcontinua.farcade.CursoInstructorFacade ejbFacadeInstructor;
+    private edu.ucuenca.edcontinua.farcade.ModuloInstructorFacade ejbFacadeInstructor;
     private List<Instructor> items = null;
+    private List<Instructor> itemsFilter;
     private List<Instructor> itemsWhere = null;
     private Instructor selected;
 
     public InstructorController() {
+        selected = new Instructor();
     }
 
     public Instructor getSelected() {
@@ -72,9 +76,9 @@ public class InstructorController implements Serializable {
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("InstructorUpdated"));
     }
 
-    public void SetItemsWhere(Curso selected) {
+    public void SetItemsWhere(Modulo selected) {
        
-        List<CursoInstructor> findWhere = ejbFacadeInstructor.findWhere("SELECT distinct w FROM CursoInstructor w WHERE w.idCurso.idCurso='"+selected.getIdCurso()+"'");
+        List<ModuloInstructor> findWhere = ejbFacadeInstructor.findWhere("SELECT distinct w FROM ModuloInstructor w WHERE w.idModulo.idModulo='"+selected.getIdModulo()+"'");
         
         List<Instructor> itemsIns = new ArrayList<Instructor>();
         for(int i=0; i<findWhere.size(); i++){
@@ -184,4 +188,12 @@ public class InstructorController implements Serializable {
 
     }
 
+    public List<Instructor> getItemsFilter() {
+        return itemsFilter;
+    }
+
+    public void setItemsFilter(List<Instructor> itemsFilter) {
+        this.itemsFilter = itemsFilter;
+    }
+    
 }

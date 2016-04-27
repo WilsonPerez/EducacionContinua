@@ -20,18 +20,59 @@
                         <p:outputLabel value="#{bundle.EditModuloLabel_descripcion}" for="descripcion" />
                         <p:inputText id="descripcion" value="#{moduloController.selected.descripcion}" title="#{bundle.EditModuloTitle_descripcion}" />
                         <p:outputLabel value="#{bundle.EditModuloLabel_idCurso}" for="idCurso" />
-                        <p:selectOneMenu id="idCurso" value="#{moduloController.selected.idCurso}" >
-                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
-                            <f:selectItems value="#{cursoController.itemsAvailableSelectOne}"
-                                           var="idCursoItem"
-                                           itemValue="#{idCursoItem}"/>
+                        <p:selectOneMenu id="idCurso" value="#{moduloController.selected.idCurso}" var="t" filter="true" filterMatchMode="startsWith">
+                            <f:selectItems value="#{cursoController.itemsAvailableSelectOne}" var="idCursoItem" itemValue="#{idCursoItem}" itemLabel="#{idCursoItem.nombre}" />
+                            <p:column >
+                                <h:outputText value="#{t.nombre}" />
+                            </p:column>
                         </p:selectOneMenu>
+                        
                     </p:panelGrid>
-                    <div style="text-align: center; margin-top: 4px">
+                    
+                </h:panelGroup>
+                    
+                   
+                                    <p:growl id="msg" showDetail="true" escape="false" />
+
+                                    <p:pickList id="pojoPickList" value="#{moduloController.instructores}" var="theme" effect="bounce"
+                                                itemValue="#{theme}" converter="instructorConverter"
+                                                    showSourceControls="true" showTargetControls="true" showCheckbox="true"
+                                    showSourceFilter="true" showTargetFilter="true" filterMatchMode="contains" itemLabel="#{theme.nombre}">
+
+                                        <f:facet name="sourceCaption">Available</f:facet>
+                                        <f:facet name="targetCaption">Starting</f:facet>
+
+                                        <p:ajax event="transfer" listener="#{moduloController.onTransfer}" update="msg" />
+
+                                        <p:column style="width:25%">
+                                            <h:outputText styleClass="ui-theme ui-theme-#{theme.nombre}" />
+                                        </p:column>
+
+                                         <p:column style="width:75%;">
+                                            #{theme.nombre}
+                                        </p:column>
+                                    </p:pickList>
+
+                                    <p:commandButton id="pojoSubmit" value="Submit" update="displayPlayersI" oncomplete="playerDialogI.show()" style="margin-top:5px"/>
+
+                                     <p:dialog modal="true" showEffect="fade" hideEffect="fade" widgetVar="playerDialogI">
+                                        <h:panelGrid id="displayPlayersI" columns="2">
+                                            <h:outputText value="Source: " style="font-weight:bold"/>
+                                            <ui:repeat value="#{moduloController.instructores.source}" var="player">
+                                                <h:outputText value="#{theme.nombre}" style="margin-right:5px" />
+                                            </ui:repeat>
+
+                                            <h:outputText value="Target: " style="font-weight:bold"/>
+                                            <ui:repeat value="#{cursoController.instructores.target}" var="player">
+                                                <h:outputText value="#{theme.nombre}" style="margin-right:5px" />
+                                            </ui:repeat>
+                                        </h:panelGrid>
+                                    </p:dialog>
+                                
+                                    <div style="text-align: center; margin-top: 4px">
                     <p:commandButton actionListener="#{moduloController.update}" value="#{bundle.Save}" update="display,:ModuloListForm:datalist,:growl" oncomplete="PF('ModuloEditDialog').hide();"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="ModuloEditDialog.hide()"/>
                     </div>
-                </h:panelGroup>
                 </div>
             </h:form>
         </p:dialog>

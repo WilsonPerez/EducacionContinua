@@ -1,21 +1,21 @@
 package edu.ucuenca.edcontinua.entities;
 
-import edu.ucuenca.edcontinua.entities.CursoInstructor;
+import edu.ucuenca.edcontinua.entities.ModuloInstructor;
 import javax.annotation.Generated;
 import javax.persistence.metamodel.CollectionAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2015-01-07T15:28:54")
+@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2016-04-26T10:54:28")
 @StaticMetamodel(Instructor.class)
 public class Instructor_ { 
 
-    public static volatile SingularAttribute<Instructor, String> nombre;
+    public static volatile CollectionAttribute<Instructor, ModuloInstructor> moduloInstructorCollection;
+    public static volatile SingularAttribute<Instructor, String> tipo;
+    public static volatile SingularAttribute<Instructor, String> estudiosAdicionales;
+    public static volatile SingularAttribute<Instructor, String> ci;
     public static volatile SingularAttribute<Instructor, String> apellido;
     public static volatile SingularAttribute<Instructor, String> profesion;
-    public static volatile SingularAttribute<Instructor, String> tipo;
-    public static volatile SingularAttribute<Instructor, String> ci;
-    public static volatile CollectionAttribute<Instructor, CursoInstructor> cursoInstructorCollection;
-    public static volatile SingularAttribute<Instructor, String> estudiosAdicionales;
+    public static volatile SingularAttribute<Instructor, String> nombre;
 
 }

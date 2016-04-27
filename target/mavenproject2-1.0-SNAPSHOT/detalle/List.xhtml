@@ -16,24 +16,40 @@
                                  paginator="true"
                                  rowKey="#{item.idDetalle}"
                                  rows="10"
-                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 rowsPerPageTemplate="10,20,30,40,50" filteredValue="#{detalleController.itemsFilter}"
                                  >
 
                         <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
                         <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
 
-                        <p:column>
+                        <p:column sortBy="#{item.idDetalle}">
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListDetalleTitle_idDetalle}"/>
                             </f:facet>
                             <h:outputText value="#{item.idDetalle}"/>
                         </p:column>
                         
-                        <p:column>
+                        <p:column sortBy="#{item.fechaInscripcion}">
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListDetalleTitle_fechaInscripcion}"/>
                             </f:facet>
                             <h:outputText value="#{item.fechaInscripcion}">
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column sortBy="#{item.fechaInicio}">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListDetalleTitle_fechaInicio}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.fechaInicio}">
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column sortBy="#{item.fechaFin}">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListDetalleTitle_fechaFin}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.fechaFin}">
                                 <f:convertDateTime pattern="MM/dd/yyyy" />
                             </h:outputText>
                         </p:column>
@@ -43,24 +59,7 @@
                             </f:facet>
                             <h:outputText value="#{item.numHoras}"/>
                         </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListDetalleTitle_lugarInscripcion}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.lugarInscripcion}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListDetalleTitle_direccionCurso}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.direccionCurso}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListDetalleTitle_numTelefono}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.numTelefono}"/>
-                        </p:column>
+                        
                         <p:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListDetalleTitle_precio}"/>
@@ -73,7 +72,7 @@
                             </f:facet>
                             <h:outputText value="#{item.numCupos}"/>
                         </p:column>
-                        <p:column>
+                        <p:column sortBy="#{item.idCurso.nombre}" filterMatchMode="contains" filterBy="#{item.idCurso.nombre}">
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListDetalleTitle_idCurso}"/>
                             </f:facet>

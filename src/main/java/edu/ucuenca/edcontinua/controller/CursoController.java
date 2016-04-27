@@ -38,6 +38,7 @@ public class CursoController implements Serializable {
     @EJB
     private edu.ucuenca.edcontinua.farcade.CursoFacade ejbFacade;
     private List<Curso> items = null;
+    private List<Curso> itemsFilter;
     private Curso selected;
 
     @EJB
@@ -88,6 +89,7 @@ public class CursoController implements Serializable {
         List<DirigidoA> dirigidos = ejbFacadeDigido.findAll();
         List<DirigidoA> dirigidos2 = new ArrayList<DirigidoA>();
         dirigidosa= new DualListModel<DirigidoA>(dirigidos, dirigidos2);
+        dirigidosaM= new DualListModel<DirigidoA>(dirigidos, dirigidos2);
         
         List<Instructor> instructores2 = ejbFacadeInstructor.findAll();
         List<Instructor> instructores3 = new ArrayList<Instructor>();
@@ -213,14 +215,16 @@ public class CursoController implements Serializable {
      Se ejecuta cuando se selecciona la opcion de modificar instructor
     */
     public void editInstructor(){
-        setDataInstructor();
+       // setDataInstructor();
         setDataDirigidoa();
         cursoAux=selected;
     }
+    
+    
     /**
      Se coloca los datos al momento de Editar el Instructor
     */
-    public void setDataInstructor(){
+    /*public void setDataInstructor(){
         List<Instructor> instructores2 = ejbFacadeInstructor.findAll();
         List<Instructor> instructores3 = new ArrayList<Instructor>();
         if(selected!=null){
@@ -247,7 +251,7 @@ public class CursoController implements Serializable {
             }
         }
         instructores= new DualListModel<Instructor>(instructores2, instructores3);
-    }
+    }*/
     
     /**
      Se coloca los datos al momento de Editar el Dirigidoa
@@ -303,12 +307,12 @@ public class CursoController implements Serializable {
                     
                     //getFacade().edit(selected);
                     GuardarDetalle();
-                    GuardarInstructor();
+                    ////GuardarInstructor();
                     GuardarDirigidoa();
                     
                 } else if(persistAction.toString().compareTo(PersistAction.UPDATE.toString())==0){
                     getFacade().edit(selected);
-                    EditInstructorDualList();
+                    ////EditInstructorDualList();
                     EditDirigidosDualList();
                 }else{
                     getFacade().remove(selected);
@@ -441,6 +445,7 @@ public class CursoController implements Serializable {
     /**
      *  Actualiza los datos del DualListMOdel relacionado al instructor
      */
+    /*
     public void EditInstructorDualList(){
         CursoInstructor instanceCursoInstructor=new CursoInstructor();
         instanceCursoInstructor.setIdCurso(selected);
@@ -469,7 +474,7 @@ public class CursoController implements Serializable {
             }if (bandera==true)
                 GuardarInstructorCurso(instructores.getTarget().get(i).getCi());
         }
-    }
+    }*/
     
     /**
      *  Actualiza los datos del DualListMOdel relacionado a DirigidoA
@@ -526,4 +531,13 @@ public class CursoController implements Serializable {
         int a =0;
         int aa =0;
     }
+
+    public List<Curso> getItemsFilter() {
+        return itemsFilter;
+    }
+
+    public void setItemsFilter(List<Curso> itemsFilter) {
+        this.itemsFilter = itemsFilter;
+    }
+    
 }

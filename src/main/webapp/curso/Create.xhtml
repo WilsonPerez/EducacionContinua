@@ -18,10 +18,16 @@
                         <p:outputLabel value="#{bundle.CreateCursoLabel_descripccion}" for="descripccion" />
                         <p:inputText id="descripccion" value="#{cursoController.selected.descripccion}" title="#{bundle.CreateCursoTitle_descripccion}" style="width: 98%"/>
                         <p:outputLabel value="#{bundle.CreateCursoLabel_idTipo}" for="idTipo" />
-                        <p:selectOneMenu id="idTipo" value="#{cursoController.selected.idTipo}" >
+                        
+                        <p:selectOneMenu id="idTipo" value="#{cursoController.selected.idTipo}" 
+                                         var="t" >
                             <f:selectItems value="#{tipoController.itemsAvailableSelectOne}"
                                            var="idTipoItem"
-                                           itemValue="#{idTipoItem}"/>
+                                           itemValue="#{idTipoItem}" itemLabel="#{idTipoItem.nombre}"/>
+                            
+                                            <p:column>
+                                                <h:outputText value="#{t.nombre}" />
+                                            </p:column>
                         </p:selectOneMenu>
                     </p:panelGrid>
                         <p:tabView>
@@ -33,6 +39,10 @@
                                             <p:inputTextarea id="objetivos" value="#{detalleController.selected.objetivos}" title="#{bundle.CreateDetalleTitle_objetivos}" required="true" requiredMessage="#{bundle.CreateDetalleRequiredMessage_objetivos}" maxlength="200" rows="1" style="width: 98%; height: 70px" />
                                             <p:outputLabel value="#{bundle.CreateDetalleLabel_fechaInscripcion}" for="fechaInscripcion" />
                                             <p:calendar id="fechaInscripcion" pattern="MM/dd/yyyy" value="#{detalleController.selected.fechaInscripcion}" title="#{bundle.EditDetalleTitle_fechaInscripcion}" required="true" requiredMessage="#{bundle.EditDetalleRequiredMessage_fechaInscripcion}" showOn="button"/>
+                                            <p:outputLabel value="#{bundle.CreateDetalleLabel_fechaInicio}" />
+                                            <p:calendar id="fechaInicio" pattern="MM/dd/yyyy" value="#{detalleController.selected.fechaInicio}" title="#{bundle.CreateDetalleLabel_fechaInicio}" showOn="button"/>
+                                            <p:outputLabel value="#{bundle.CreateDetalleLabel_fechaFin}" />
+                                            <p:calendar id="fechaFin" pattern="MM/dd/yyyy" value="#{detalleController.selected.fechaFin}" title="#{bundle.CreateDetalleLabel_fechaFin}" showOn="button"/>
                                             <p:outputLabel value="#{bundle.CreateDetalleLabel_numHoras}" for="numHoras" />
                                             <p:inputText id="numHoras" value="#{detalleController.selected.numHoras}" title="#{bundle.CreateDetalleTitle_numHoras}" />
                                             <p:outputLabel value="#{bundle.CreateDetalleLabel_lugarInscripcion}" for="lugarInscripcion" />
@@ -90,47 +100,6 @@
                                 </p:dialog>
                             </h:form>
                         </p:tab>
-                        <p:tab title="Instructor">
-                            <h:form>
-                                <p:growl id="msg" showDetail="true" escape="false" />
-
-                                <p:pickList id="pojoPickList" value="#{cursoController.instructores}" var="theme" effect="bounce"
-                                            itemValue="#{theme}" converter="instructorConverter"
-                                                showSourceControls="true" showTargetControls="true" showCheckbox="true"
-                                showSourceFilter="true" showTargetFilter="true" filterMatchMode="contains" itemLabel="#{theme.nombre}">
-
-                                    <f:facet name="sourceCaption">Available</f:facet>
-                                    <f:facet name="targetCaption">Starting</f:facet>
-
-                                    <p:ajax event="transfer" listener="#{cursoController.onTransfer}" update="msg" />
-
-                                    <p:column style="width:25%">
-                                        <h:outputText styleClass="ui-theme ui-theme-#{theme.nombre}" />
-                                    </p:column>
-
-                                     <p:column style="width:75%;">
-                                        #{theme.nombre}
-                                    </p:column>
-                                </p:pickList>
-
-                                <p:commandButton id="pojoSubmit" value="Submit" update="displayPlayers" oncomplete="playerDialog.show()" style="margin-top:5px"/>
-
-                                 <p:dialog modal="true" showEffect="fade" hideEffect="fade" widgetVar="playerDialog">
-                                    <h:panelGrid id="displayPlayers" columns="2">
-                                        <h:outputText value="Source: " style="font-weight:bold"/>
-                                        <ui:repeat value="#{cursoController.instructores.source}" var="player">
-                                            <h:outputText value="#{theme.nombre}" style="margin-right:5px" />
-                                        </ui:repeat>
-
-                                        <h:outputText value="Target: " style="font-weight:bold"/>
-                                        <ui:repeat value="#{cursoController.instructores.target}" var="player">
-                                            <h:outputText value="#{theme.nombre}" style="margin-right:5px" />
-                                        </ui:repeat>
-                                    </h:panelGrid>
-                                </p:dialog>
-                            </h:form>
-                        </p:tab>
-                        
                     </p:tabView>
                     <div style="text-align: center; margin-top: 4px">
                         

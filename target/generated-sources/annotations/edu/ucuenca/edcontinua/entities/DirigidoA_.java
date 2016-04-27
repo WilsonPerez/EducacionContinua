@@ -6,12 +6,12 @@ import javax.persistence.metamodel.CollectionAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2015-01-07T15:28:54")
+@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2016-04-26T10:54:28")
 @StaticMetamodel(DirigidoA.class)
 public class DirigidoA_ { 
 
-    public static volatile SingularAttribute<DirigidoA, String> nombre;
-    public static volatile SingularAttribute<DirigidoA, String> idDirigidoa;
     public static volatile CollectionAttribute<DirigidoA, CursoDirigidoa> cursoDirigidoaCollection;
+    public static volatile SingularAttribute<DirigidoA, String> idDirigidoa;
+    public static volatile SingularAttribute<DirigidoA, String> nombre;
 
 }

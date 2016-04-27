@@ -6,7 +6,9 @@
 package edu.ucuenca.edcontinua.entities;
 
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,10 +18,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -33,7 +37,11 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Modulo.findByIdModulo", query = "SELECT m FROM Modulo m WHERE m.idModulo = :idModulo"),
     @NamedQuery(name = "Modulo.findByNombre", query = "SELECT m FROM Modulo m WHERE m.nombre = :nombre"),
     @NamedQuery(name = "Modulo.findByDescripcion", query = "SELECT m FROM Modulo m WHERE m.descripcion = :descripcion")})
+
 public class Modulo implements Serializable {
+   
+    
+   
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -51,7 +59,9 @@ public class Modulo implements Serializable {
     @JoinColumn(name = "id_curso", referencedColumnName = "id_curso")
     @ManyToOne
     private Curso idCurso;
-
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idModulo")
+    @JoinColumn(name = "id_modulo", referencedColumnName = "id_modulo")
+    private Collection<ModuloInstructor> moduloInstructorCollection;
     public Modulo() {
     }
 
@@ -119,6 +129,15 @@ public class Modulo implements Serializable {
     @Override
     public String toString() {
         return "edu.ucuenca.edcontinua.entities.Modulo[ idModulo=" + idModulo + " ]";
+    }
+
+    @XmlTransient
+    public Collection<ModuloInstructor> getModuloInstructorCollection() {
+        return moduloInstructorCollection;
+    }
+
+    public void setModuloInstructorCollection(Collection<ModuloInstructor> moduloInstructorCollection) {
+        this.moduloInstructorCollection = moduloInstructorCollection;
     }
     
 }

@@ -5,24 +5,8 @@
  */
 package edu.ucuenca.controller.manager;
 
+import edu.ucuenca.edcontinua.entities.Detalle;
 import edu.ucuenca.edcontinua.entities.*;
-import java.io.Serializable;
-import java.util.Collection;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -37,9 +21,10 @@ public class CursoL implements Serializable {
     private String idCurso;
     private String nombre;
     private String descripccion;
+    private String modulos;
     private Tipo idTipo;
-    private Collection<Instructor> instructorCollection;
-    private Collection<Modulo> moduloCollection;
+    //private Collection<Instructor> instructorCollection;
+    private Collection<Modulos> moduloCollection;
     private Collection<DirigidoA> dirigidoaCollection;
     private Collection<Detalle> detalleCollection;
 
@@ -87,19 +72,20 @@ public class CursoL implements Serializable {
         this.idTipo = idTipo;
     }
 
+    /*
      public Collection<Instructor> getCursoInstructorCollection() {
         return instructorCollection;
     }
 
     public void setCursoInstructorCollection(Collection<Instructor> cursoInstructorCollection) {
         this.instructorCollection = cursoInstructorCollection;
-    }
+    }*/
 
-    public Collection<Modulo> getModuloCollection() {
+    public Collection<Modulos> getModuloCollection() {
         return moduloCollection;
     }
 
-    public void setModuloCollection(Collection<Modulo> moduloCollection) {
+    public void setModuloCollection(Collection<Modulos> moduloCollection) {
         this.moduloCollection = moduloCollection;
     }
 
@@ -118,4 +104,13 @@ public class CursoL implements Serializable {
     public void setDetalleCollection(Collection<Detalle> detalleCollection) {
         this.detalleCollection = detalleCollection;
     }
+
+    public String getModulos() {
+        return modulos;
+    }
+
+    public void setModulos(String modulos) {
+        this.modulos = modulos;
+    }
+    
 }

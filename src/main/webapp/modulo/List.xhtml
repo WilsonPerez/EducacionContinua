@@ -17,19 +17,19 @@
                                  paginator="true"
                                  rowKey="#{item.idModulo}"
                                  rows="10"
-                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 rowsPerPageTemplate="10,20,30,40,50" filteredValue="#{moduloController.itemsFilter}"
                                  >
 
                         <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
                         <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
 
-                        <p:column>
+                        <p:column sortBy="#{item.idModulo}">
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListModuloTitle_idModulo}"/>
                             </f:facet>
                             <h:outputText value="#{item.idModulo}"/>
                         </p:column>
-                        <p:column>
+                        <p:column sortBy="#{item.nombre}" filterMatchMode="contains" filterBy="#{item.nombre}">
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListModuloTitle_nombre}"/>
                             </f:facet>
@@ -41,16 +41,78 @@
                             </f:facet>
                             <h:outputText value="#{item.descripcion}"/>
                         </p:column>
-                        <p:column>
+                        <p:column sortBy="#{item.idCurso.nombre}" filterMatchMode="contains" filterBy="#{item.idCurso.nombre}">
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListModuloTitle_idCurso}"/>
                             </f:facet>
                             <h:outputText value="#{item.idCurso.nombre}"/>
                         </p:column>
+                        
+                        <p:column style="text-align: center">
+                            <f:facet name="header">
+                                <h:outputText value="Instructor"/>
+                            </f:facet>
+                            <p:commandButton icon="ui-icon-search" update="InstructorViewForm" 
+                                oncomplete="PF('InstructorViewDialog').show()" actionListener="#{instructorController.SetItemsWhere(moduloController.selected)}"/>
+                            
+                            <p:dialog id="InstructorViewForm" widgetVar="InstructorViewDialog" modal="true" resizable="true" 
+                                      appendTo="@(body)" header="#{bundle.ViewInstructorTitle}" width="80%">
+                                <h:form id="InstructorViewForm2">
+                                    <div id="listaL">
+                                        <p:dataTable id="datalist" value="#{instructorController.itemsWhere}" var="item"
+                                                    selectionMode="single" selection="#{instructorController.selected}"
+                                                    paginator="true"
+                                                    rowKey="#{item.ci}"
+                                                    rows="10"
+                                                    rowsPerPageTemplate="10,20,30,40,50"
+                                                     >
+
+                                            <p:column>
+                                                <f:facet name="header">
+                                                    <h:outputText value="#{bundle.ListInstructorTitle_ci}"/>
+                                                </f:facet>
+                                                <h:outputText value="#{item.ci}"/>
+                                            </p:column>
+                                            <p:column>
+                                                <f:facet name="header">
+                                                    <h:outputText value="#{bundle.ListInstructorTitle_nombre}"/>
+                                                </f:facet>
+                                                <h:outputText value="#{item.nombre}"/>
+                                            </p:column>
+                                            <p:column>
+                                                <f:facet name="header">
+                                                    <h:outputText value="#{bundle.ListInstructorTitle_apellido}"/>
+                                                </f:facet>
+                                                <h:outputText value="#{item.apellido}"/>
+                                            </p:column>
+                                            <p:column>
+                                                <f:facet name="header">
+                                                    <h:outputText value="#{bundle.ListInstructorTitle_profesion}"/>
+                                                </f:facet>
+                                                <h:outputText value="#{item.profesion}"/>
+                                            </p:column>
+                                            <p:column>
+                                                <f:facet name="header">
+                                                    <h:outputText value="#{bundle.ListInstructorTitle_estudiosAdicionales}"/>
+                                                </f:facet>
+                                                <h:outputText value="#{item.estudiosAdicionales}"/>
+                                            </p:column>
+                                            <p:column>
+                                                <f:facet name="header">
+                                                    <h:outputText value="#{bundle.ListInstructorTitle_tipo}"/>
+                                                </f:facet>
+                                                <h:outputText value="#{item.tipo}"/>
+                                            </p:column>
+                                        </p:dataTable>
+                                        </div>
+                                </h:form>
+                            </p:dialog>
+                        </p:column>
+                        
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{moduloController.prepareCreate}" update=":ModuloCreateForm" oncomplete="PF('ModuloCreateDialog').show()"/>
                             <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":ModuloViewForm" oncomplete="PF('ModuloViewDialog').show()" disabled="#{empty moduloController.selected}"/>
-                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":ModuloEditForm" oncomplete="PF('ModuloEditDialog').show()" disabled="#{empty moduloController.selected}"/>
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" actionListener="#{moduloController.edit}" update=":ModuloEditForm" oncomplete="PF('ModuloEditDialog').show()" disabled="#{empty moduloController.selected}"/>
                             <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{moduloController.destroy}" update=":growl,datalist" disabled="#{empty moduloController.selected}"/>
                         </f:facet>
                     </p:dataTable>
